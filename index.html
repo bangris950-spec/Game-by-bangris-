@@ -21,106 +21,46 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; user-select: none; -webkit-tap-highlight-color: transparent; }
         
-        body {
-            background-color: var(--bg-base);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            overflow-x: hidden;
-        }
+        body { background-color: var(--bg-base); color: var(--text-main); min-height: 100vh; display: flex; justify-content: center; overflow-x: hidden; }
 
-        .container {
-            width: 100%;
-            max-width: 800px;
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
+        .container { width: 100%; max-width: 800px; padding: 24px; display: flex; flex-direction: column; gap: 24px; }
 
         /* --- HEADER --- */
         .header { text-align: center; margin-top: 20px; }
-        .header h1 {
-            font-size: 2rem; font-weight: 800; letter-spacing: -1px;
-            background: linear-gradient(to right, #818cf8, #c084fc);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            margin-bottom: 8px;
-        }
+        .header h1 { font-size: 2rem; font-weight: 800; letter-spacing: -1px; background: linear-gradient(to right, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px; }
         .header p { color: var(--text-muted); font-size: 0.9rem; }
 
-        /* --- DASHBOARD GAME GRID --- */
-        .game-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 16px;
-        }
+        /* --- GAME GRID --- */
+        .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
 
-        .game-card {
-            background: var(--bg-panel);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            transition: transform 0.2s, border-color 0.2s;
-        }
+        .game-card { background: var(--bg-panel); border: 1px solid var(--border); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 12px; transition: transform 0.2s, border-color 0.2s; }
         .game-card:hover { border-color: var(--accent); transform: translateY(-2px); }
         
-        .game-thumb {
-            width: 100%; height: 120px; background: #262626; border-radius: 12px;
-            display: flex; justify-content: center; align-items: center; font-size: 3rem;
-            border: 1px dashed var(--border);
-        }
+        .game-thumb { width: 100%; height: 120px; background: #262626; border-radius: 12px; display: flex; justify-content: center; align-items: center; font-size: 3rem; border: 1px dashed var(--border); }
 
         .game-info h3 { font-size: 1.1rem; font-weight: 800; }
-        .game-info p { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; }
+        .game-info p { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; word-break: break-all; }
 
-        .btn-play {
-            background: var(--accent); color: white; text-align: center;
-            padding: 10px; border-radius: 8px; text-decoration: none;
-            font-weight: 800; font-size: 0.9rem; margin-top: auto; transition: 0.2s;
-            cursor: pointer; border: none;
-        }
+        .btn-play { background: var(--accent); color: white; text-align: center; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: 800; font-size: 0.9rem; margin-top: auto; transition: 0.2s; cursor: pointer; border: none; }
         .btn-play:hover { background: var(--accent-hover); }
+        .btn-download { background: var(--success); }
+        .btn-download:hover { background: #059669; }
 
         /* --- UPLOAD SECTION --- */
-        .upload-section {
-            background: var(--bg-panel); border: 1px solid var(--border);
-            border-radius: 16px; padding: 24px; margin-top: 20px;
-        }
+        .upload-section { background: var(--bg-panel); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-top: 20px; }
         .upload-section h2 { font-size: 1.2rem; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
         
         .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
         .form-group label { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; }
-        .form-group input, .form-group textarea {
-            background: var(--bg-base); border: 1px solid var(--border);
-            padding: 12px; border-radius: 8px; color: white;
-            font-size: 0.9rem; outline: none;
-        }
-        .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); }
-        .form-group textarea { resize: vertical; min-height: 100px; font-family: monospace; }
+        .form-group input, .form-group select { background: var(--bg-base); border: 1px solid var(--border); padding: 12px; border-radius: 8px; color: white; font-size: 0.9rem; outline: none; }
+        .form-group input:focus, .form-group select:focus { border-color: var(--accent); }
 
-        .btn-upload {
-            background: var(--success); color: white; border: none;
-            padding: 12px 24px; border-radius: 8px; font-weight: 800;
-            font-size: 0.9rem; cursor: pointer; width: 100%; transition: 0.2s;
-        }
+        .btn-upload { background: var(--success); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 800; font-size: 0.9rem; cursor: pointer; width: 100%; transition: 0.2s; }
         .btn-upload:hover { background: #059669; }
 
         /* --- TOAST --- */
-        #toast-container {
-            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-            z-index: 1000; display: flex; flex-direction: column; gap: 8px;
-            align-items: center; width: 90%; max-width: 400px; pointer-events: none;
-        }
-        .toast {
-            background: var(--bg-card); color: white; padding: 12px 16px;
-            border-radius: 8px; font-weight: 600; font-size: 0.85rem;
-            border: 1px solid var(--border); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5);
-            width: 100%; text-align: center; animation: slideUp 0.3s forwards;
-        }
+        #toast-container { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 1000; display: flex; flex-direction: column; gap: 8px; align-items: center; width: 90%; max-width: 400px; pointer-events: none; }
+        .toast { background: var(--bg-card); color: white; padding: 12px 16px; border-radius: 8px; font-weight: 600; font-size: 0.85rem; border: 1px solid var(--border); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5); width: 100%; text-align: center; animation: slideUp 0.3s forwards; }
         .toast.error { border-left: 4px solid var(--danger); }
         .toast.success { border-left: 4px solid var(--success); }
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -131,30 +71,42 @@
 <div class="container">
     <div class="header">
         <h1>NEXUS GAME HUB</h1>
-        <p>Portal game premium. Upload, mainkan, dan kelola.</p>
+        <p>Portal game premium. Web & Android APK.</p>
     </div>
 
     <div class="game-grid" id="game-grid">
-        <!-- GAME DEFAULT -->
+        <!-- ==========================================
+             GAME DEFAULT: TOKO HP SECOND SIMULATOR
+             ========================================== -->
         <div class="game-card">
-            <div class="game-thumb">🌴</div>
+            <div class="game-thumb">📱</div>
             <div class="game-info">
-                <h3>Palm Oil Tycoon</h3>
-                <p>Simulasi pabrik kelapa sawit.</p>
+                <h3>Toko HP Second Simulator</h3>
+                <p>Game Android (APK).</p>
             </div>
-            <a href="palm.html" class="btn-play">Mainkan</a>
+            <!-- Link MediaFire lo -->
+            <a href="https://www.mediafire.com/file/ck0gz37gnmvb6sq/_TOKO_HP_second_simulator_20405120.apk/file" target="_blank" class="btn-play btn-download">⬇️ Download APK</a>
         </div>
     </div>
 
     <div class="upload-section">
         <h2>📤 Upload Game Baru</h2>
+        <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:16px;">Bisa upload link Web HTML atau APK MediaFire.</p>
+        
         <div class="form-group">
             <label>Nama Game</label>
             <input type="text" id="upload-name" placeholder="Contoh: Game Petualangan">
         </div>
         <div class="form-group">
-            <label>Kode HTML/JS Game</label>
-            <textarea id="upload-code" placeholder="<html>... kode game lo di sini ...</html>"></textarea>
+            <label>Tipe Game</label>
+            <select id="upload-type">
+                <option value="web">Web (Mainkan Langsung)</option>
+                <option value="apk">Android (Download APK)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Link Game / Link Download</label>
+            <input type="url" id="upload-link" placeholder="https://...">
         </div>
         <div class="form-group">
             <label>Kode Verifikasi Admin (Wajib)</label>
@@ -167,9 +119,8 @@
 <div id="toast-container"></div>
 
 <script>
-    // KODE VERIFIKASI SESUAI PERMINTAAN LO
     const ADMIN_CODE = "bangris satu dua lima"; 
-    const STORAGE_KEY = "nexus_games";
+    const STORAGE_KEY = "nexus_game_links";
 
     function showToast(msg, type = 'info') {
         const container = document.getElementById('toast-container');
@@ -182,14 +133,18 @@
 
     function processUpload() {
         const name = document.getElementById('upload-name').value.trim();
-        const code = document.getElementById('upload-code').value.trim();
+        const type = document.getElementById('upload-type').value;
+        const link = document.getElementById('upload-link').value.trim();
         const auth = document.getElementById('upload-auth').value.trim();
 
-        if (!name || !code || !auth) return showToast("Isi semua kolom!", "error");
+        if (!name || !link || !auth) return showToast("Isi semua kolom!", "error");
         
-        // Cek verifikasi (diubah jadi huruf kecil semua biar gak case-sensitive)
         if (auth.toLowerCase() !== ADMIN_CODE.toLowerCase()) {
             return showToast("Kode Verifikasi SALAH! Akses ditolak.", "error");
+        }
+
+        if (!link.startsWith("http://") && !link.startsWith("https://")) {
+            return showToast("Link harus dimulai dengan http:// atau https://", "error");
         }
 
         try {
@@ -198,51 +153,44 @@
                 return showToast("Nama game sudah ada.", "error");
             }
 
-            games.push({ name: name, code: code, id: Date.now() });
+            games.push({ name: name, type: type, link: link, id: Date.now() });
             localStorage.setItem(STORAGE_KEY, JSON.stringify(games));
 
             showToast("Verifikasi Berhasil! Game Ter-upload.", "success");
             document.getElementById('upload-name').value = "";
-            document.getElementById('upload-code').value = "";
+            document.getElementById('upload-link').value = "";
             document.getElementById('upload-auth').value = "";
             renderGames();
         } catch (e) {
-            showToast("Gagal: Memori penuh.", "error");
+            showToast("Gagal menyimpan.", "error");
         }
     }
 
     function renderGames() {
         const grid = document.getElementById('game-grid');
+        // Hapus card yg di-upload sebelumnya (simpen 1 card default di index 0)
         const cards = grid.querySelectorAll('.game-card');
-        cards.forEach((c, index) => { if(index > 0) c.remove(); }); // Hapus yg lama, simpen default
+        cards.forEach((c, index) => { if(index >= 1) c.remove(); });
 
         let games = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
         games.forEach(game => {
             const card = document.createElement('div');
             card.className = 'game-card';
+            
+            let btnClass = game.type === 'apk' ? 'btn-download' : '';
+            let btnText = game.type === 'apk' ? '⬇️ Download APK' : 'Mainkan Web';
+            let thumbIcon = game.type === 'apk' ? '📱' : '🌐';
+
             card.innerHTML = `
-                <div class="game-thumb">🎮</div>
+                <div class="game-thumb">${thumbIcon}</div>
                 <div class="game-info">
                     <h3>${game.name}</h3>
-                    <p>Game Uploaded</p>
+                    <p>${game.link}</p>
                 </div>
-                <button class="btn-play" onclick="openGame(${game.id})">Mainkan</button>
+                <a href="${game.link}" target="_blank" class="btn-play ${btnClass}">${btnText}</a>
             `;
             grid.appendChild(card);
         });
-    }
-
-    function openGame(id) {
-        let games = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-        let game = games.find(g => g.id === id);
-        if (game) {
-            // Buka game di tab baru
-            const newWindow = window.open();
-            newWindow.document.write(game.code);
-            newWindow.document.close();
-        } else {
-            showToast("Game tidak ditemukan.", "error");
-        }
     }
 
     window.onload = function() {
