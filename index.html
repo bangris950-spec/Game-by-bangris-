@@ -36,7 +36,8 @@
         .game-card { background: var(--bg-panel); border: 1px solid var(--border); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 12px; transition: transform 0.2s, border-color 0.2s; }
         .game-card:hover { border-color: var(--accent); transform: translateY(-2px); }
         
-        .game-thumb { width: 100%; height: 120px; background: #262626; border-radius: 12px; display: flex; justify-content: center; align-items: center; font-size: 3rem; border: 1px dashed var(--border); }
+        .game-thumb { width: 100%; height: 120px; background: #262626; border-radius: 12px; display: flex; justify-content: center; align-items: center; font-size: 3rem; border: 1px dashed var(--border); overflow: hidden; }
+        .game-thumb img { width: 100%; height: 100%; object-fit: cover; }
 
         .game-info h3 { font-size: 1.1rem; font-weight: 800; }
         .game-info p { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; word-break: break-all; }
@@ -52,8 +53,16 @@
         
         .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
         .form-group label { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; }
-        .form-group input, .form-group select { background: var(--bg-base); border: 1px solid var(--border); padding: 12px; border-radius: 8px; color: white; font-size: 0.9rem; outline: none; }
+        .form-group input[type="text"], .form-group input[type="url"], .form-group select, .form-group input[type="password"] { 
+            background: var(--bg-base); border: 1px solid var(--border); padding: 12px; border-radius: 8px; color: white; font-size: 0.9rem; outline: none; 
+        }
         .form-group input:focus, .form-group select:focus { border-color: var(--accent); }
+
+        /* Custom File Upload Styling */
+        .file-upload-wrapper { position: relative; overflow: hidden; display: inline-block; width: 100%; }
+        .file-upload-wrapper input[type="file"] { position: absolute; left: 0; top: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer; }
+        .file-upload-btn { background: var(--bg-base); border: 1px dashed var(--border); padding: 12px; border-radius: 8px; color: var(--text-muted); font-size: 0.9rem; text-align: center; display: block; transition: 0.2s; }
+        .file-upload-wrapper:hover .file-upload-btn { border-color: var(--accent); color: var(--text-main); }
 
         .btn-upload { background: var(--success); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 800; font-size: 0.9rem; cursor: pointer; width: 100%; transition: 0.2s; }
         .btn-upload:hover { background: #059669; }
@@ -79,7 +88,9 @@
              GAME DEFAULT: TOKO HP SECOND SIMULATOR
              ========================================== -->
         <div class="game-card">
-            <div class="game-thumb">📱</div>
+            <div class="game-thumb" style="background: linear-gradient(45deg, #1e293b, #3b82f6);">
+                <img src="https://via.placeholder.com/300x150/3b82f6/ffffff?text=Toko+HP+Second" alt="Logo">
+            </div>
             <div class="game-info">
                 <h3>Toko HP Second Simulator</h3>
                 <p>Game Android (APK).</p>
@@ -91,12 +102,21 @@
 
     <div class="upload-section">
         <h2>📤 Upload Game Baru</h2>
-        <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:16px;">Bisa upload link Web HTML atau APK MediaFire.</p>
         
         <div class="form-group">
             <label>Nama Game</label>
             <input type="text" id="upload-name" placeholder="Contoh: Game Petualangan">
         </div>
+
+        <!-- FITUR UPLOAD LOGO -->
+        <div class="form-group">
+            <label>Upload Logo Game (JPG/PNG)</label>
+            <div class="file-upload-wrapper">
+                <input type="file" id="upload-logo" accept="image/png, image/jpeg" onchange="previewLogo(this)">
+                <span class="file-upload-btn" id="file-label">📁 Pilih Gambar Logo...</span>
+            </div>
+        </div>
+
         <div class="form-group">
             <label>Tipe Game</label>
             <select id="upload-type">
@@ -120,7 +140,8 @@
 
 <script>
     const ADMIN_CODE = "bangris satu dua lima"; 
-    const STORAGE_KEY = "nexus_game_links";
+    const STORAGE_KEY = "nexus_games_with_logo";
+    let logoBase64 = ""; // Variabel global buat nyimpen gambar yang di-upload
 
     function showToast(msg, type = 'info') {
         const container = document.getElementById('toast-container');
@@ -131,14 +152,29 @@
         setTimeout(() => el.remove(), 3000);
     }
 
+    // Fungsi buat nampilin nama file & convert ke Base64
+    function previewLogo(input) {
+        if (input.files && input.files[0]) {
+            let file = input.files[0];
+            document.getElementById('file-label').innerText = "✅ " + file.name;
+            
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                logoBase64 = e.target.result; // Simpan sebagai Base64
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
     function processUpload() {
         const name = document.getElementById('upload-name').value.trim();
         const type = document.getElementById('upload-type').value;
         const link = document.getElementById('upload-link').value.trim();
         const auth = document.getElementById('upload-auth').value.trim();
 
-        if (!name || !link || !auth) return showToast("Isi semua kolom!", "error");
+        if (!name || !link || !auth) return showToast("Isi nama, link, dan kode verifikasi!", "error");
         
+        // Verifikasi Kode
         if (auth.toLowerCase() !== ADMIN_CODE.toLowerCase()) {
             return showToast("Kode Verifikasi SALAH! Akses ditolak.", "error");
         }
@@ -153,22 +189,35 @@
                 return showToast("Nama game sudah ada.", "error");
             }
 
-            games.push({ name: name, type: type, link: link, id: Date.now() });
+            // Simpan data termasuk logoBase64
+            games.push({ 
+                name: name, 
+                type: type, 
+                link: link, 
+                logo: logoBase64, 
+                id: Date.now() 
+            });
             localStorage.setItem(STORAGE_KEY, JSON.stringify(games));
 
             showToast("Verifikasi Berhasil! Game Ter-upload.", "success");
+            
+            // Reset Form
             document.getElementById('upload-name').value = "";
             document.getElementById('upload-link').value = "";
             document.getElementById('upload-auth').value = "";
+            document.getElementById('upload-logo').value = "";
+            document.getElementById('file-label').innerText = "📁 Pilih Gambar Logo...";
+            logoBase64 = "";
+            
             renderGames();
         } catch (e) {
-            showToast("Gagal menyimpan.", "error");
+            showToast("Gagal menyimpan. Mungkin memori browser penuh (gambar kegedean).", "error");
         }
     }
 
     function renderGames() {
         const grid = document.getElementById('game-grid');
-        // Hapus card yg di-upload sebelumnya (simpen 1 card default di index 0)
+        // Hapus card lama, simpen default (index 0)
         const cards = grid.querySelectorAll('.game-card');
         cards.forEach((c, index) => { if(index >= 1) c.remove(); });
 
@@ -179,10 +228,14 @@
             
             let btnClass = game.type === 'apk' ? 'btn-download' : '';
             let btnText = game.type === 'apk' ? '⬇️ Download APK' : 'Mainkan Web';
-            let thumbIcon = game.type === 'apk' ? '📱' : '🌐';
+            
+            // Cek apakah ada logo, kalau nggak ada pakai icon default
+            let thumbContent = game.logo 
+                ? `<img src="${game.logo}" alt="Logo">` 
+                : (game.type === 'apk' ? '📱' : '🌐');
 
             card.innerHTML = `
-                <div class="game-thumb">${thumbIcon}</div>
+                <div class="game-thumb">${thumbContent}</div>
                 <div class="game-info">
                     <h3>${game.name}</h3>
                     <p>${game.link}</p>
