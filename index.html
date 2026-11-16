@@ -1,254 +1,1005 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Nexus Game Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-base: #0a0a0a;
-            --bg-panel: #171717;
-            --bg-card: #262626;
-            --border: #404040;
-            --text-main: #f5f5f5;
-            --text-muted: #a3a3a3;
-            --accent: #6366f1;
-            --accent-hover: #4f46e5;
-            --danger: #ef4444;
-            --success: #10b981;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090B10">
+  <meta name="description" content="BANG RIS GAME HUB — Discover original indie games crafted by Bang Ris. Made with passion. Built for gamers.">
+  <meta name="author" content="Bang Ris">
+  <meta property="og:title" content="BANG RIS GAME HUB">
+  <meta property="og:description" content="Discover original games crafted with creativity, passion, and imagination.">
+  <meta property="og:type" content="website">
+  <title>BANG RIS GAME HUB — Official Indie Game Studio</title>
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; user-select: none; -webkit-tap-highlight-color: transparent; }
-        
-        body { background-color: var(--bg-base); color: var(--text-main); min-height: 100vh; display: flex; justify-content: center; overflow-x: hidden; }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-        .container { width: 100%; max-width: 800px; padding: 24px; display: flex; flex-direction: column; gap: 24px; }
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23090B10'/%3E%3Cpath d='M16 17h32v9H26v5h18v9H26v5h22v9H16z' fill='%238B5CF6'/%3E%3C/svg%3E">
 
-        /* --- HEADER --- */
-        .header { text-align: center; margin-top: 20px; }
-        .header h1 { font-size: 2rem; font-weight: 800; letter-spacing: -1px; background: linear-gradient(to right, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px; }
-        .header p { color: var(--text-muted); font-size: 0.9rem; }
+  <style>
+    :root {
+      --bg: #090B10;
+      --surface: #11151E;
+      --surface-2: #171D29;
+      --purple: #8B5CF6;
+      --cyan: #00D9FF;
+      --white: #F5F7FA;
+      --muted: #9299A8;
+      --border: rgba(255,255,255,.09);
+      --radius: 16px;
+      --font: 'DM Sans', sans-serif;
+      --display: 'Space Grotesk', sans-serif;
+    }
 
-        /* --- GAME GRID --- */
-        .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        .game-card { background: var(--bg-panel); border: 1px solid var(--border); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 12px; transition: transform 0.2s, border-color 0.2s; }
-        .game-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-        
-        .game-thumb { width: 100%; height: 120px; background: #262626; border-radius: 12px; display: flex; justify-content: center; align-items: center; font-size: 3rem; border: 1px dashed var(--border); overflow: hidden; }
-        .game-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 90px;
+    }
 
-        .game-info h3 { font-size: 1.1rem; font-weight: 800; }
-        .game-info p { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; word-break: break-all; }
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
 
-        .btn-play { background: var(--accent); color: white; text-align: center; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: 800; font-size: 0.9rem; margin-top: auto; transition: 0.2s; cursor: pointer; border: none; }
-        .btn-play:hover { background: var(--accent-hover); }
-        .btn-download { background: var(--success); }
-        .btn-download:hover { background: #059669; }
+    body.modal-open {
+      overflow: hidden;
+    }
 
-        /* --- UPLOAD SECTION --- */
-        .upload-section { background: var(--bg-panel); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-top: 20px; }
-        .upload-section h2 { font-size: 1.2rem; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
-        
-        .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
-        .form-group label { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; }
-        .form-group input[type="text"], .form-group input[type="url"], .form-group select, .form-group input[type="password"] { 
-            background: var(--bg-base); border: 1px solid var(--border); padding: 12px; border-radius: 8px; color: white; font-size: 0.9rem; outline: none; 
-        }
-        .form-group input:focus, .form-group select:focus { border-color: var(--accent); }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-        /* Custom File Upload Styling */
-        .file-upload-wrapper { position: relative; overflow: hidden; display: inline-block; width: 100%; }
-        .file-upload-wrapper input[type="file"] { position: absolute; left: 0; top: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer; }
-        .file-upload-btn { background: var(--bg-base); border: 1px dashed var(--border); padding: 12px; border-radius: 8px; color: var(--text-muted); font-size: 0.9rem; text-align: center; display: block; transition: 0.2s; }
-        .file-upload-wrapper:hover .file-upload-btn { border-color: var(--accent); color: var(--text-main); }
+    button, input, select {
+      font: inherit;
+    }
 
-        .btn-upload { background: var(--success); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 800; font-size: 0.9rem; cursor: pointer; width: 100%; transition: 0.2s; }
-        .btn-upload:hover { background: #059669; }
+    button {
+      cursor: pointer;
+    }
 
-        /* --- TOAST --- */
-        #toast-container { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 1000; display: flex; flex-direction: column; gap: 8px; align-items: center; width: 90%; max-width: 400px; pointer-events: none; }
-        .toast { background: var(--bg-card); color: white; padding: 12px 16px; border-radius: 8px; font-weight: 600; font-size: 0.85rem; border: 1px solid var(--border); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5); width: 100%; text-align: center; animation: slideUp 0.3s forwards; }
-        .toast.error { border-left: 4px solid var(--danger); }
-        .toast.success { border-left: 4px solid var(--success); }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    </style>
+    img, svg {
+      max-width: 100%;
+    }
+
+    .container {
+      width: min(1160px, calc(100% - 44px));
+      margin: auto;
+    }
+
+    .section {
+      padding: 105px 0;
+    }
+
+    .section-heading {
+      margin-bottom: 38px;
+    }
+
+    .eyebrow {
+      color: var(--cyan);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: var(--display);
+      line-height: 1.15;
+    }
+
+    .section-title {
+      font-size: clamp(30px, 5vw, 43px);
+      letter-spacing: -1.5px;
+    }
+
+    .section-description {
+      color: var(--muted);
+      margin-top: 12px;
+      max-width: 570px;
+      font-size: 14px;
+    }
+
+    /* NAVIGATION */
+
+    .navbar {
+      position: fixed;
+      z-index: 100;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 76px;
+      background: rgba(9,11,16,.87);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-family: var(--display);
+      font-weight: 800;
+      letter-spacing: 1px;
+      font-size: 17px;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      color: white;
+      background: var(--purple);
+      font-size: 16px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+      transition: .2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: white;
+    }
+
+    .nav-cta {
+      padding: 10px 18px;
+      border-radius: 8px;
+      background: var(--purple);
+      color: white !important;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      color: white;
+      border: 0;
+      font-size: 25px;
+      padding: 6px;
+    }
+
+    /* BUTTONS */
+
+    .btn {
+      min-height: 46px;
+      padding: 12px 21px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 9px;
+      border: 1px solid transparent;
+      border-radius: 9px;
+      font-size: 13px;
+      font-weight: 800;
+      transition: transform .2s, background .2s, border-color .2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: var(--purple);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #7544e9;
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,.04);
+      border-color: var(--border);
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--purple);
+      background: rgba(139,92,246,.1);
+    }
+
+    .btn-cyan {
+      background: var(--cyan);
+      color: #071018;
+    }
+
+    .btn-small {
+      min-height: 39px;
+      padding: 9px 14px;
+      font-size: 12px;
+    }
+
+    /* HERO */
+
+    .hero {
+      position: relative;
+      min-height: 700px;
+      padding: 170px 0 110px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 80% 40%, rgba(139,92,246,.17), transparent 42%),
+        radial-gradient(ellipse at 15% 80%, rgba(0,217,255,.07), transparent 38%),
+        var(--bg);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 430px;
+      height: 430px;
+      right: 4%;
+      top: 18%;
+      border: 1px solid rgba(139,92,246,.15);
+      border-radius: 50%;
+      box-shadow: 0 0 100px rgba(139,92,246,.08);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 310px;
+      height: 310px;
+      right: 9%;
+      top: 27%;
+      border: 1px solid rgba(0,217,255,.14);
+      border-radius: 50%;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 690px;
+      animation: enter .8s ease both;
+    }
+
+    @keyframes enter {
+      from { opacity: 0; transform: translateY(22px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 13px;
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      background: rgba(255,255,255,.03);
+      color: #c8c0e9;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 26px;
+    }
+
+    .hero-tag span {
+      width: 7px;
+      height: 7px;
+      background: var(--cyan);
+      border-radius: 50%;
+    }
+
+    .hero h1 {
+      font-size: clamp(44px, 7vw, 76px);
+      letter-spacing: -3.8px;
+      font-weight: 700;
+      max-width: 760px;
+    }
+
+    .hero h1 em {
+      color: var(--purple);
+      font-style: normal;
+    }
+
+    .hero-text {
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 510px;
+      margin: 24px 0 32px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 13px;
+    }
+
+    .hero-note {
+      margin-top: 62px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+
+    .hero-note strong {
+      color: white;
+    }
+
+    /* FEATURED GAME */
+
+    .featured {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .featured-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 65px;
+      align-items: center;
+    }
+
+    .game-art {
+      min-height: 370px;
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      border-radius: 19px;
+      background:
+        radial-gradient(circle at 50% 45%, rgba(139,92,246,.4), transparent 42%),
+        linear-gradient(145deg, #25203f, #11151e 70%);
+      border: 1px solid rgba(139,92,246,.3);
+    }
+
+    .game-art::before,
+    .game-art::after {
+      content: "";
+      position: absolute;
+      border: 1px solid rgba(255,255,255,.09);
+      transform: rotate(-25deg);
+    }
+
+    .game-art::before {
+      width: 360px;
+      height: 190px;
+    }
+
+    .game-art::after {
+      width: 300px;
+      height: 260px;
+      transform: rotate(30deg);
+    }
+
+    .art-inner {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 25px;
+    }
+
+    .art-symbol {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 22px;
+      border-radius: 25px;
+      background: rgba(139,92,246,.2);
+      border: 1px solid rgba(255,255,255,.2);
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-size: 39px;
+      font-weight: 800;
+      color: white;
+      box-shadow: 0 0 50px rgba(139,92,246,.25);
+    }
+
+    .art-title {
+      font-family: var(--display);
+      font-size: clamp(23px, 3vw, 33px);
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .art-subtitle {
+      color: #c2b3f7;
+      font-size: 10px;
+      letter-spacing: 3px;
+      margin-top: 8px;
+    }
+
+    .feature-copy h2 {
+      font-size: clamp(30px, 4vw, 42px);
+      margin: 20px 0 15px;
+      letter-spacing: -1.5px;
+    }
+
+    .feature-copy > p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 23px;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      background: rgba(139,92,246,.13);
+      color: #c5adff;
+      border: 1px solid rgba(139,92,246,.28);
+      border-radius: 5px;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .8px;
+    }
+
+    .badge.cyan {
+      color: var(--cyan);
+      background: rgba(0,217,255,.08);
+      border-color: rgba(0,217,255,.2);
+    }
+
+    .badge.green {
+      color: #70e4ae;
+      background: rgba(112,228,174,.08);
+      border-color: rgba(112,228,174,.2);
+    }
+
+    .game-meta {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      padding: 19px 0;
+      margin: 18px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .meta-label {
+      color: var(--muted);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .meta-value {
+      display: block;
+      margin-top: 3px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .feature-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* CATALOG */
+
+    .catalog-tools {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 27px;
+    }
+
+    .field {
+      min-width: 0;
+      width: 100%;
+      padding: 12px 13px;
+      border-radius: 8px;
+      background: var(--surface);
+      color: white;
+      border: 1px solid var(--border);
+      outline: none;
+      font-size: 12px;
+    }
+
+    .field:focus {
+      border-color: var(--purple);
+    }
+
+    .field option {
+      background: var(--surface);
+    }
+
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .game-card {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: var(--surface);
+      transition: transform .25s, border-color .25s;
+    }
+
+    .game-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(139,92,246,.55);
+    }
+
+    .card-art {
+      height: 195px;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle, rgba(139,92,246,.32), transparent 50%),
+        linear-gradient(145deg, #26213e, #141824);
+      position: relative;
+    }
+
+    .card-art .art-symbol {
+      width: 68px;
+      height: 68px;
+      border-radius: 17px;
+      font-size: 27px;
+      margin: 0;
+    }
+
+    .card-art .art-title {
+      font-size: 19px;
+      margin-top: 10px;
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+
+    .card-body h3 {
+      font-size: 19px;
+      margin: 13px 0 8px;
+    }
+
+    .card-body p {
+      min-height: 62px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .card-info {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 10px;
+      padding: 13px 0;
+      border-top: 1px solid var(--border);
+      margin-top: 13px;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .card-actions .btn {
+      flex: 1;
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 55px 15px;
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      color: var(--muted);
+    }
+
+    .empty-state h3 {
+      color: white;
+      margin-bottom: 9px;
+    }
+
+    .catalog-count {
+      color: var(--muted);
+      font-size: 11px;
+      margin-bottom: 17px;
+    }
+
+    /* RELEASES */
+
+    .updates {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .update-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .update-item {
+      display: grid;
+      grid-template-columns: 90px 1fr auto;
+      align-items: center;
+      gap: 22px;
+      padding: 23px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 11px;
+    }
+
+    .update-version {
+      font-family: var(--display);
+      color: var(--purple);
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .update-item h3 {
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    .update-item p {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .update-date {
+      color: var(--muted);
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    /* ABOUT */
+
+    .about-box {
+      max-width: 750px;
+      padding: 42px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background:
+        radial-gradient(ellipse at top right, rgba(139,92,246,.13), transparent 45%),
+        var(--surface);
+    }
+
+    .about-box h2 {
+      font-size: 34px;
+      margin-bottom: 17px;
+    }
+
+    .about-box p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .about-signature {
+      margin-top: 25px;
+      color: var(--purple);
+      font-family: var(--display);
+      font-weight: 700;
+    }
+
+    /* FOOTER */
+
+    footer {
+      padding: 60px 0 25px;
+      border-top: 1px solid var(--border);
+      background: #07090d;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 50px;
+      padding-bottom: 40px;
+    }
+
+    .footer-description {
+      color: var(--muted);
+      max-width: 340px;
+      font-size: 12px;
+      margin-top: 16px;
+    }
+
+    .footer-column h4 {
+      font-size: 13px;
+      margin-bottom: 15px;
+    }
+
+    .footer-column a {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+
+    .footer-column a:hover {
+      color: var(--cyan);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    /* MODAL */
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: none;
+      place-items: center;
+      padding: 20px;
+      background: rgba(0,0,0,.8);
+      backdrop-filter: blur(9px);
+    }
+
+    .modal.open {
+      display: grid;
+    }
+
+    .modal-content {
+      width: min(680px, 100%);
+      max-height: 85vh;
+      overflow-y: auto;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      position: relative;
+      animation: enter .25s ease;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 17px;
+      width: 35px;
+      height: 35px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
+      color: white;
+      font-size: 20px;
+    }
+
+    .modal-content h2 {
+      font-size: 28px;
+      margin: 17px 40px 12px 0;
+    }
+
+    .modal-content p {
+      color: var(--muted);
+      font-size: 13px;
+      margin: 13px 0;
+    }
+
+    .detail-art {
+      min-height: 180px;
+      display: grid;
+      place-items: center;
+      border-radius: 11px;
+      background: radial-gradient(circle, rgba(139,92,246,.3), transparent 60%), #171827;
+    }
+
+    .gallery-placeholder {
+      padding: 23px;
+      margin: 15px 0;
+      border: 1px dashed var(--border);
+      border-radius: 9px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .modal-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    /* RESPONSIVE */
+
+    @media(max-width: 900px) {
+      .featured-card {
+        gap: 30px;
+      }
+
+      .catalog-tools {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .catalog-tools input {
+        grid-column: 1 / -1;
+      }
+
+      .game-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .hero::before {
+        right: -200px;
+      }
+
+      .hero::after {
+        right: -150px;
+      }
+    }
+
+    @media(max-width: 650px) {
+      .container {
+        width: min(100% - 32px, 1160px);
+      }
+
+      .section {
+        padding: 75px 0;
+      }
+
+      .navbar {
+        height: 67px;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 67px;
+        left: 0;
+        width: 100%;
+        padding: 20px 25px 25px;
+        background: #10141d;
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        align-items: stretch;
+        gap: 19px;
+      }
+
+      .nav-links.show {
+        display: flex;
+      }
+
+      .nav-cta {
+        text-align: center;
+      }
+
+      .hero {
+        min-height: 640px;
+        padding: 140px 0 80px;
+      }
+
+      .hero h1 {
+        letter-spacing: -2px;
+      }
+
+      .hero-text {
+        font-size: 14px;
+      }
+
+      .hero-note {
+        margin-top: 42px;
+      }
+
+      .featured-card {
+        grid-template-columns: 1fr;
+      }
+
+      .game-art {
+        min-height: 290px;
+      }
+
+      .feature-copy h2 {
+        font-size: 32px;
+      }
+
+      .game-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .catalog-tools {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .catalog-tools input {
+        grid-column: 1 / -1;
+      }
+
+      .update-item {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .update-date {
+        white-space: normal;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+      }
+
+      .footer-grid > div:first-child {
+        grid-column: 1 / -1;
+      }
+
+      .about-box {
+        padding: 28px 22px;
+      }
+
+      .modal-content {
+        padding: 22px;
+      }
+    }
+
+    @media(max-width: 370px) {
+      .catalog-tools {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-actions .btn {
+        width: 100%;
+      }
+    }
+
+    @media(prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="container">
-    <div class="header">
-        <h1>NEXUS GAME HUB</h1>
-        <p>Portal game premium. Web & Android APK.</p>
-    </div>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="#home" class="brand" aria-label="Bang Ris Game Hub Home">
+        <span class="brand-mark">BR</span>
+        <span>BANG RIS</span>
+      </a>
 
-    <div class="game-grid" id="game-grid">
-        <!-- ==========================================
-             GAME DEFAULT: TOKO HP SECOND SIMULATOR
-             ========================================== -->
-        <div class="game-card">
-            <div class="game-thumb" style="background: linear-gradient(45deg, #1e293b, #3b82f6);">
-                <img src="https://via.placeholder.com/300x150/3b82f6/ffffff?text=Toko+HP+Second" alt="Logo">
-            </div>
-            <div class="game-info">
-                <h3>Toko HP Second Simulator</h3>
-                <p>Game Android (APK).</p>
-            </div>
-            <!-- Link MediaFire lo -->
-            <a href="https://www.mediafire.com/file/ck0gz37gnmvb6sq/_TOKO_HP_second_simulator_20405120.apk/file" target="_blank" class="btn-play btn-download">⬇️ Download APK</a>
-        </div>
-    </div>
-
-    <div class="upload-section">
-        <h2>📤 Upload Game Baru</h2>
-        
-        <div class="form-group">
-            <label>Nama Game</label>
-            <input type="text" id="upload-name" placeholder="Contoh: Game Petualangan">
-        </div>
-
-        <!-- FITUR UPLOAD LOGO -->
-        <div class="form-group">
-            <label>Upload Logo Game (JPG/PNG)</label>
-            <div class="file-upload-wrapper">
-                <input type="file" id="upload-logo" accept="image/png, image/jpeg" onchange="previewLogo(this)">
-                <span class="file-upload-btn" id="file-label">📁 Pilih Gambar Logo...</span>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label>Tipe Game</label>
-            <select id="upload-type">
-                <option value="web">Web (Mainkan Langsung)</option>
-                <option value="apk">Android (Download APK)</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>Link Game / Link Download</label>
-            <input type="url" id="upload-link" placeholder="https://...">
-        </div>
-        <div class="form-group">
-            <label>Kode Verifikasi Admin (Wajib)</label>
-            <input type="text" id="upload-auth" placeholder="Masukkan kode rahasia...">
-        </div>
-        <button class="btn-upload" onclick="processUpload()">Upload & Verifikasi</button>
-    </div>
-</div>
-
-<div id="toast-container"></div>
-
-<script>
-    const ADMIN_CODE = "bangris satu dua lima"; 
-    const STORAGE_KEY = "nexus_games_with_logo";
-    let logoBase64 = ""; // Variabel global buat nyimpen gambar yang di-upload
-
-    function showToast(msg, type = 'info') {
-        const container = document.getElementById('toast-container');
-        const el = document.createElement('div');
-        el.className = `toast ${type}`;
-        el.innerText = msg;
-        container.appendChild(el);
-        setTimeout(() => el.remove(), 3000);
-    }
-
-    // Fungsi buat nampilin nama file & convert ke Base64
-    function previewLogo(input) {
-        if (input.files && input.files[0]) {
-            let file = input.files[0];
-            document.getElementById('file-label').innerText = "✅ " + file.name;
-            
-            let reader = new FileReader();
-            reader.onload = function(e) {
-                logoBase64 = e.target.result; // Simpan sebagai Base64
-            };
-            reader.readAsDataURL(file);
-        }
-    }
-
-    function processUpload() {
-        const name = document.getElementById('upload-name').value.trim();
-        const type = document.getElementById('upload-type').value;
-        const link = document.getElementById('upload-link').value.trim();
-        const auth = document.getElementById('upload-auth').value.trim();
-
-        if (!name || !link || !auth) return showToast("Isi nama, link, dan kode verifikasi!", "error");
-        
-        // Verifikasi Kode
-        if (auth.toLowerCase() !== ADMIN_CODE.toLowerCase()) {
-            return showToast("Kode Verifikasi SALAH! Akses ditolak.", "error");
-        }
-
-        if (!link.startsWith("http://") && !link.startsWith("https://")) {
-            return showToast("Link harus dimulai dengan http:// atau https://", "error");
-        }
-
-        try {
-            let games = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-            if (games.find(g => g.name.toLowerCase() === name.toLowerCase())) {
-                return showToast("Nama game sudah ada.", "error");
-            }
-
-            // Simpan data termasuk logoBase64
-            games.push({ 
-                name: name, 
-                type: type, 
-                link: link, 
-                logo: logoBase64, 
-                id: Date.now() 
-            });
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(games));
-
-            showToast("Verifikasi Berhasil! Game Ter-upload.", "success");
-            
-            // Reset Form
-            document.getElementById('upload-name').value = "";
-            document.getElementById('upload-link').value = "";
-            document.getElementById('upload-auth').value = "";
-            document.getElementById('upload-logo').value = "";
-            document.getElementById('file-label').innerText = "📁 Pilih Gambar Logo...";
-            logoBase64 = "";
-            
-            renderGames();
-        } catch (e) {
-            showToast("Gagal menyimpan. Mungkin memori browser penuh (gambar kegedean).", "error");
-        }
-    }
-
-    function renderGames() {
-        const grid = document.getElementById('game-grid');
-        // Hapus card lama, simpen default (index 0)
-        const cards = grid.querySelectorAll('.game-card');
-        cards.forEach((c, index) => { if(index >= 1) c.remove(); });
-
-        let games = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-        games.forEach(game => {
-            const card = document.createElement('div');
-            card.className = 'game-card';
-            
-            let btnClass = game.type === 'apk' ? 'btn-download' : '';
-            let btnText = game.type === 'apk' ? '⬇️ Download APK' : 'Mainkan Web';
-            
-            // Cek apakah ada logo, kalau nggak ada pakai icon default
-            let thumbContent = game.logo 
-                ? `<img src="${game.logo}" alt="Logo">` 
-                : (game.type === 'apk' ? '📱' : '🌐');
-
-            card.innerHTML = `
-                <div class="game-thumb">${thumbContent}</div>
-                <div class="game-info">
-                    <h3>${game.name}</h3>
-                    <p>${game.link}</p>
-                </div>
-                <a href="${game.link}" target="_blank" class="btn-play ${btnClass}">${btnText}</a>
-            `;
-            grid.appendChild(card);
-        });
-    }
-
-    window.onload = function() {
-        renderGames();
-    };
-</script>
-</body>
-</html>
+      <button class="menu-toggle" id="menuToggle"
+    
