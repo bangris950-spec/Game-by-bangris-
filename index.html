@@ -1,1005 +1,579 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#090B10">
-  <meta name="description" content="BANG RIS GAME HUB — Discover original indie games crafted by Bang Ris. Made with passion. Built for gamers.">
-  <meta name="author" content="Bang Ris">
-  <meta property="og:title" content="BANG RIS GAME HUB">
-  <meta property="og:description" content="Discover original games crafted with creativity, passion, and imagination.">
-  <meta property="og:type" content="website">
-  <title>BANG RIS GAME HUB — Official Indie Game Studio</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23090B10'/%3E%3Cpath d='M16 17h32v9H26v5h18v9H26v5h22v9H16z' fill='%238B5CF6'/%3E%3C/svg%3E">
-
-  <style>
-    :root {
-      --bg: #090B10;
-      --surface: #11151E;
-      --surface-2: #171D29;
-      --purple: #8B5CF6;
-      --cyan: #00D9FF;
-      --white: #F5F7FA;
-      --muted: #9299A8;
-      --border: rgba(255,255,255,.09);
-      --radius: 16px;
-      --font: 'DM Sans', sans-serif;
-      --display: 'Space Grotesk', sans-serif;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      scroll-padding-top: 90px;
-    }
-
-    body {
-      background: var(--bg);
-      color: var(--white);
-      font-family: var(--font);
-      line-height: 1.65;
-      overflow-x: hidden;
-    }
-
-    body.modal-open {
-      overflow: hidden;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    button, input, select {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    img, svg {
-      max-width: 100%;
-    }
-
-    .container {
-      width: min(1160px, calc(100% - 44px));
-      margin: auto;
-    }
-
-    .section {
-      padding: 105px 0;
-    }
-
-    .section-heading {
-      margin-bottom: 38px;
-    }
-
-    .eyebrow {
-      color: var(--cyan);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-
-    h1, h2, h3, h4 {
-      font-family: var(--display);
-      line-height: 1.15;
-    }
-
-    .section-title {
-      font-size: clamp(30px, 5vw, 43px);
-      letter-spacing: -1.5px;
-    }
-
-    .section-description {
-      color: var(--muted);
-      margin-top: 12px;
-      max-width: 570px;
-      font-size: 14px;
-    }
-
-    /* NAVIGATION */
-
-    .navbar {
-      position: fixed;
-      z-index: 100;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 76px;
-      background: rgba(9,11,16,.87);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav-inner {
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      font-family: var(--display);
-      font-weight: 800;
-      letter-spacing: 1px;
-      font-size: 17px;
-    }
-
-    .brand-mark {
-      width: 36px;
-      height: 36px;
-      display: grid;
-      place-items: center;
-      border-radius: 10px;
-      color: white;
-      background: var(--purple);
-      font-size: 16px;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 32px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 600;
-      transition: .2s;
-    }
-
-    .nav-links a:hover,
-    .nav-links a.active {
-      color: white;
-    }
-
-    .nav-cta {
-      padding: 10px 18px;
-      border-radius: 8px;
-      background: var(--purple);
-      color: white !important;
-    }
-
-    .menu-toggle {
-      display: none;
-      background: none;
-      color: white;
-      border: 0;
-      font-size: 25px;
-      padding: 6px;
-    }
-
-    /* BUTTONS */
-
-    .btn {
-      min-height: 46px;
-      padding: 12px 21px;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      gap: 9px;
-      border: 1px solid transparent;
-      border-radius: 9px;
-      font-size: 13px;
-      font-weight: 800;
-      transition: transform .2s, background .2s, border-color .2s;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-    }
-
-    .btn-primary {
-      background: var(--purple);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: #7544e9;
-    }
-
-    .btn-secondary {
-      background: rgba(255,255,255,.04);
-      border-color: var(--border);
-      color: white;
-    }
-
-    .btn-secondary:hover {
-      border-color: var(--purple);
-      background: rgba(139,92,246,.1);
-    }
-
-    .btn-cyan {
-      background: var(--cyan);
-      color: #071018;
-    }
-
-    .btn-small {
-      min-height: 39px;
-      padding: 9px 14px;
-      font-size: 12px;
-    }
-
-    /* HERO */
-
-    .hero {
-      position: relative;
-      min-height: 700px;
-      padding: 170px 0 110px;
-      display: flex;
-      align-items: center;
-      overflow: hidden;
-      background:
-        radial-gradient(ellipse at 80% 40%, rgba(139,92,246,.17), transparent 42%),
-        radial-gradient(ellipse at 15% 80%, rgba(0,217,255,.07), transparent 38%),
-        var(--bg);
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      width: 430px;
-      height: 430px;
-      right: 4%;
-      top: 18%;
-      border: 1px solid rgba(139,92,246,.15);
-      border-radius: 50%;
-      box-shadow: 0 0 100px rgba(139,92,246,.08);
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      width: 310px;
-      height: 310px;
-      right: 9%;
-      top: 27%;
-      border: 1px solid rgba(0,217,255,.14);
-      border-radius: 50%;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 690px;
-      animation: enter .8s ease both;
-    }
-
-    @keyframes enter {
-      from { opacity: 0; transform: translateY(22px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .hero-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      padding: 8px 13px;
-      border: 1px solid var(--border);
-      border-radius: 30px;
-      background: rgba(255,255,255,.03);
-      color: #c8c0e9;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      margin-bottom: 26px;
-    }
-
-    .hero-tag span {
-      width: 7px;
-      height: 7px;
-      background: var(--cyan);
-      border-radius: 50%;
-    }
-
-    .hero h1 {
-      font-size: clamp(44px, 7vw, 76px);
-      letter-spacing: -3.8px;
-      font-weight: 700;
-      max-width: 760px;
-    }
-
-    .hero h1 em {
-      color: var(--purple);
-      font-style: normal;
-    }
-
-    .hero-text {
-      color: var(--muted);
-      font-size: 16px;
-      max-width: 510px;
-      margin: 24px 0 32px;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 13px;
-    }
-
-    .hero-note {
-      margin-top: 62px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--muted);
-      font-size: 11px;
-      letter-spacing: 1px;
-    }
-
-    .hero-note strong {
-      color: white;
-    }
-
-    /* FEATURED GAME */
-
-    .featured {
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .featured-card {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 65px;
-      align-items: center;
-    }
-
-    .game-art {
-      min-height: 370px;
-      position: relative;
-      overflow: hidden;
-      display: grid;
-      place-items: center;
-      border-radius: 19px;
-      background:
-        radial-gradient(circle at 50% 45%, rgba(139,92,246,.4), transparent 42%),
-        linear-gradient(145deg, #25203f, #11151e 70%);
-      border: 1px solid rgba(139,92,246,.3);
-    }
-
-    .game-art::before,
-    .game-art::after {
-      content: "";
-      position: absolute;
-      border: 1px solid rgba(255,255,255,.09);
-      transform: rotate(-25deg);
-    }
-
-    .game-art::before {
-      width: 360px;
-      height: 190px;
-    }
-
-    .game-art::after {
-      width: 300px;
-      height: 260px;
-      transform: rotate(30deg);
-    }
-
-    .art-inner {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      padding: 25px;
-    }
-
-    .art-symbol {
-      width: 100px;
-      height: 100px;
-      margin: 0 auto 22px;
-      border-radius: 25px;
-      background: rgba(139,92,246,.2);
-      border: 1px solid rgba(255,255,255,.2);
-      display: grid;
-      place-items: center;
-      font-family: var(--display);
-      font-size: 39px;
-      font-weight: 800;
-      color: white;
-      box-shadow: 0 0 50px rgba(139,92,246,.25);
-    }
-
-    .art-title {
-      font-family: var(--display);
-      font-size: clamp(23px, 3vw, 33px);
-      font-weight: 800;
-      letter-spacing: -1px;
-    }
-
-    .art-subtitle {
-      color: #c2b3f7;
-      font-size: 10px;
-      letter-spacing: 3px;
-      margin-top: 8px;
-    }
-
-    .feature-copy h2 {
-      font-size: clamp(30px, 4vw, 42px);
-      margin: 20px 0 15px;
-      letter-spacing: -1.5px;
-    }
-
-    .feature-copy > p {
-      color: var(--muted);
-      font-size: 14px;
-      margin-bottom: 23px;
-    }
-
-    .badge-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      padding: 6px 10px;
-      background: rgba(139,92,246,.13);
-      color: #c5adff;
-      border: 1px solid rgba(139,92,246,.28);
-      border-radius: 5px;
-      font-size: 9px;
-      font-weight: 800;
-      letter-spacing: .8px;
-    }
-
-    .badge.cyan {
-      color: var(--cyan);
-      background: rgba(0,217,255,.08);
-      border-color: rgba(0,217,255,.2);
-    }
-
-    .badge.green {
-      color: #70e4ae;
-      background: rgba(112,228,174,.08);
-      border-color: rgba(112,228,174,.2);
-    }
-
-    .game-meta {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-      padding: 19px 0;
-      margin: 18px 0;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .meta-label {
-      color: var(--muted);
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .meta-value {
-      display: block;
-      margin-top: 3px;
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .feature-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    /* CATALOG */
-
-    .catalog-tools {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 27px;
-    }
-
-    .field {
-      min-width: 0;
-      width: 100%;
-      padding: 12px 13px;
-      border-radius: 8px;
-      background: var(--surface);
-      color: white;
-      border: 1px solid var(--border);
-      outline: none;
-      font-size: 12px;
-    }
-
-    .field:focus {
-      border-color: var(--purple);
-    }
-
-    .field option {
-      background: var(--surface);
-    }
-
-    .game-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .game-card {
-      overflow: hidden;
-      border: 1px solid var(--border);
-      border-radius: 13px;
-      background: var(--surface);
-      transition: transform .25s, border-color .25s;
-    }
-
-    .game-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(139,92,246,.55);
-    }
-
-    .card-art {
-      height: 195px;
-      display: grid;
-      place-items: center;
-      background:
-        radial-gradient(circle, rgba(139,92,246,.32), transparent 50%),
-        linear-gradient(145deg, #26213e, #141824);
-      position: relative;
-    }
-
-    .card-art .art-symbol {
-      width: 68px;
-      height: 68px;
-      border-radius: 17px;
-      font-size: 27px;
-      margin: 0;
-    }
-
-    .card-art .art-title {
-      font-size: 19px;
-      margin-top: 10px;
-    }
-
-    .card-body {
-      padding: 20px;
-    }
-
-    .card-body h3 {
-      font-size: 19px;
-      margin: 13px 0 8px;
-    }
-
-    .card-body p {
-      min-height: 62px;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .card-info {
-      display: flex;
-      justify-content: space-between;
-      color: var(--muted);
-      font-size: 10px;
-      padding: 13px 0;
-      border-top: 1px solid var(--border);
-      margin-top: 13px;
-    }
-
-    .card-actions {
-      display: flex;
-      gap: 8px;
-    }
-
-    .card-actions .btn {
-      flex: 1;
-    }
-
-    .empty-state {
-      grid-column: 1 / -1;
-      text-align: center;
-      padding: 55px 15px;
-      border: 1px dashed var(--border);
-      border-radius: 12px;
-      color: var(--muted);
-    }
-
-    .empty-state h3 {
-      color: white;
-      margin-bottom: 9px;
-    }
-
-    .catalog-count {
-      color: var(--muted);
-      font-size: 11px;
-      margin-bottom: 17px;
-    }
-
-    /* RELEASES */
-
-    .updates {
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .update-list {
-      display: grid;
-      gap: 12px;
-    }
-
-    .update-item {
-      display: grid;
-      grid-template-columns: 90px 1fr auto;
-      align-items: center;
-      gap: 22px;
-      padding: 23px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 11px;
-    }
-
-    .update-version {
-      font-family: var(--display);
-      color: var(--purple);
-      font-weight: 700;
-      font-size: 13px;
-    }
-
-    .update-item h3 {
-      font-size: 16px;
-      margin-bottom: 5px;
-    }
-
-    .update-item p {
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .update-date {
-      color: var(--muted);
-      font-size: 11px;
-      white-space: nowrap;
-    }
-
-    /* ABOUT */
-
-    .about-box {
-      max-width: 750px;
-      padding: 42px;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      background:
-        radial-gradient(ellipse at top right, rgba(139,92,246,.13), transparent 45%),
-        var(--surface);
-    }
-
-    .about-box h2 {
-      font-size: 34px;
-      margin-bottom: 17px;
-    }
-
-    .about-box p {
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .about-signature {
-      margin-top: 25px;
-      color: var(--purple);
-      font-family: var(--display);
-      font-weight: 700;
-    }
-
-    /* FOOTER */
-
-    footer {
-      padding: 60px 0 25px;
-      border-top: 1px solid var(--border);
-      background: #07090d;
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      gap: 50px;
-      padding-bottom: 40px;
-    }
-
-    .footer-description {
-      color: var(--muted);
-      max-width: 340px;
-      font-size: 12px;
-      margin-top: 16px;
-    }
-
-    .footer-column h4 {
-      font-size: 13px;
-      margin-bottom: 15px;
-    }
-
-    .footer-column a {
-      display: block;
-      color: var(--muted);
-      font-size: 12px;
-      margin-bottom: 10px;
-    }
-
-    .footer-column a:hover {
-      color: var(--cyan);
-    }
-
-    .footer-bottom {
-      border-top: 1px solid var(--border);
-      padding-top: 20px;
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-      flex-wrap: wrap;
-      color: var(--muted);
-      font-size: 10px;
-    }
-
-    /* MODAL */
-
-    .modal {
-      position: fixed;
-      inset: 0;
-      z-index: 200;
-      display: none;
-      place-items: center;
-      padding: 20px;
-      background: rgba(0,0,0,.8);
-      backdrop-filter: blur(9px);
-    }
-
-    .modal.open {
-      display: grid;
-    }
-
-    .modal-content {
-      width: min(680px, 100%);
-      max-height: 85vh;
-      overflow-y: auto;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 28px;
-      position: relative;
-      animation: enter .25s ease;
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 16px;
-      right: 17px;
-      width: 35px;
-      height: 35px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: var(--bg);
-      color: white;
-      font-size: 20px;
-    }
-
-    .modal-content h2 {
-      font-size: 28px;
-      margin: 17px 40px 12px 0;
-    }
-
-    .modal-content p {
-      color: var(--muted);
-      font-size: 13px;
-      margin: 13px 0;
-    }
-
-    .detail-art {
-      min-height: 180px;
-      display: grid;
-      place-items: center;
-      border-radius: 11px;
-      background: radial-gradient(circle, rgba(139,92,246,.3), transparent 60%), #171827;
-    }
-
-    .gallery-placeholder {
-      padding: 23px;
-      margin: 15px 0;
-      border: 1px dashed var(--border);
-      border-radius: 9px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .modal-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 20px;
-    }
-
-    /* RESPONSIVE */
-
-    @media(max-width: 900px) {
-      .featured-card {
-        gap: 30px;
-      }
-
-      .catalog-tools {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .catalog-tools input {
-        grid-column: 1 / -1;
-      }
-
-      .game-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .hero::before {
-        right: -200px;
-      }
-
-      .hero::after {
-        right: -150px;
-      }
-    }
-
-    @media(max-width: 650px) {
-      .container {
-        width: min(100% - 32px, 1160px);
-      }
-
-      .section {
-        padding: 75px 0;
-      }
-
-      .navbar {
-        height: 67px;
-      }
-
-      .menu-toggle {
-        display: block;
-      }
-
-      .nav-links {
-        display: none;
-        position: absolute;
-        top: 67px;
-        left: 0;
-        width: 100%;
-        padding: 20px 25px 25px;
-        background: #10141d;
-        border-bottom: 1px solid var(--border);
-        flex-direction: column;
-        align-items: stretch;
-        gap: 19px;
-      }
-
-      .nav-links.show {
-        display: flex;
-      }
-
-      .nav-cta {
-        text-align: center;
-      }
-
-      .hero {
-        min-height: 640px;
-        padding: 140px 0 80px;
-      }
-
-      .hero h1 {
-        letter-spacing: -2px;
-      }
-
-      .hero-text {
-        font-size: 14px;
-      }
-
-      .hero-note {
-        margin-top: 42px;
-      }
-
-      .featured-card {
-        grid-template-columns: 1fr;
-      }
-
-      .game-art {
-        min-height: 290px;
-      }
-
-      .feature-copy h2 {
-        font-size: 32px;
-      }
-
-      .game-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .catalog-tools {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .catalog-tools input {
-        grid-column: 1 / -1;
-      }
-
-      .update-item {
-        grid-template-columns: 1fr;
-        gap: 8px;
-      }
-
-      .update-date {
-        white-space: normal;
-      }
-
-      .footer-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 30px;
-      }
-
-      .footer-grid > div:first-child {
-        grid-column: 1 / -1;
-      }
-
-      .about-box {
-        padding: 28px 22px;
-      }
-
-      .modal-content {
-        padding: 22px;
-      }
-    }
-
-    @media(max-width: 370px) {
-      .catalog-tools {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-actions .btn {
-        width: 100%;
-      }
-    }
-
-    @media(prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        scroll-behavior: auto !important;
-        animation-duration: .01ms !important;
-        transition-duration: .01ms !important;
-      }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Game Developer Life</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;background:#0b0e14;font-family:"Courier New",monospace;color:#dfe6f5;touch-action:none;user-select:none;-webkit-user-select:none}
+canvas{display:block;image-rendering:pixelated;image-rendering:crisp-edges;width:100%;height:100%}
+#app{position:fixed;inset:0}
+#hud{position:fixed;top:0;left:0;right:0;padding:6px 8px;display:flex;flex-direction:column;gap:4px;pointer-events:none;z-index:10}
+.hudrow{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:12px;font-weight:bold}
+.hudrow span{background:rgba(10,14,22,.78);border:2px solid #2b3550;border-radius:5px;padding:2px 7px}
+#hMoney{color:#7ee081}#hTime{color:#9fc7ff}#hPower.on{color:#ffd166}#hPower.off{color:#ff5c5c;animation:blink .8s infinite}
+@keyframes blink{50%{opacity:.3}}
+.ebar{width:96px;height:12px;background:rgba(10,14,22,.78);border:2px solid #2b3550;border-radius:5px;overflow:hidden}
+#eFill{height:100%;width:100%;background:linear-gradient(90deg,#4be07a,#a6e34b);transition:width .2s}
+#eFill.low{background:linear-gradient(90deg,#e04b4b,#e0864b)}
+#prompt{position:fixed;left:50%;bottom:130px;transform:translateX(-50%);background:rgba(10,14,22,.85);border:2px solid #4a6ba8;border-radius:6px;padding:5px 12px;font-size:12px;font-weight:bold;color:#cfe2ff;z-index:12;white-space:nowrap;pointer-events:none}
+#prompt.hidden{display:none}
+#stickArea{position:fixed;left:0;bottom:0;width:170px;height:170px;z-index:20}
+#stickBase{position:absolute;left:18px;bottom:18px;width:120px;height:120px;border-radius:50%;background:rgba(20,28,44,.55);border:3px solid #33456b}
+#stickKnob{position:absolute;left:50%;top:50%;width:52px;height:52px;margin:0;border-radius:50%;background:#4a6ba8;border:3px solid #7fa4e0;transform:translate(-50%,-50%);pointer-events:none}
+#rightBtns{position:fixed;right:14px;bottom:24px;display:flex;flex-direction:column;gap:12px;z-index:20;align-items:center}
+.gbtn{font-family:inherit;font-weight:bold;font-size:16px;color:#eaf2ff;background:linear-gradient(#2f3f60,#1d2740);border:3px solid #4a6ba8;border-radius:10px;padding:12px 0;width:74px;cursor:pointer;box-shadow:0 3px 0 #121a2b}
+.gbtn:active{transform:translateY(3px);box-shadow:none}
+#btnE{background:linear-gradient(#3f7a4a,#245231);border-color:#4be07a;color:#c8ffd8}
+#btnMusic{position:fixed;top:60px;right:14px;z-index:30;width:44px;height:44px;font-size:18px;padding:0;border-radius:50%;background:#1d2740;border:3px solid #4a6ba8;cursor:pointer;box-shadow:0 3px 0 #121a2b;color:#fff}
+#btnMusic:active{transform:translateY(3px);box-shadow:none}
+.gbtn.wide{width:100%;margin-top:10px;padding:10px 0;font-size:14px}
+#toastBox{position:fixed;left:50%;top:70px;transform:translateX(-50%);display:flex;flex-direction:column;gap:6px;z-index:60;pointer-events:none;align-items:center;width:92%;max-width:420px}
+.toast{background:rgba(16,22,34,.95);border:2px solid #4a6ba8;border-radius:6px;padding:7px 12px;font-size:12px;font-weight:bold;color:#dbe9ff;animation:tin .25s;text-align:center}
+@keyframes tin{from{opacity:0;transform:translateY(-8px)}}
+#modal{position:fixed;inset:0;background:rgba(4,7,12,.78);display:flex;align-items:center;justify-content:center;padding:10px;z-index:80}
+#modal.hidden{display:none}
+#modalBox{background:#141a26;border:3px solid #3a4a6b;border-radius:10px;width:100%;max-width:520px;max-height:88vh;overflow-y:auto;padding:14px;box-shadow:0 10px 40px #000}
+#modalTitle{font-size:15px;color:#8fd3ff;margin-bottom:10px;border-bottom:2px dashed #2b3550;padding-bottom:8px}
+#modalBody{font-size:12px;line-height:1.55}
+#modalBody h3{font-size:12px;color:#8fd3ff;margin:12px 0 6px}
+#modalBody .dim{color:#8a97b3;font-size:11px}
+#modalBody .big{font-size:20px;color:#7ee081;font-weight:bold}
+#modalBody .card{background:#1b2333;border:2px solid #2b3550;border-radius:7px;padding:8px 10px;margin-bottom:8px}
+#modalBody .row{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:6px}
+#modalBody .price{color:#ffd166;font-weight:bold;margin-right:auto}
+#modalBody .tag{background:#2b3550;color:#9fc7ff;border-radius:4px;padding:1px 6px;font-size:10px}
+#modalBody button{font-family:inherit;font-weight:bold;font-size:11px;color:#eaf2ff;background:linear-gradient(#2f3f60,#1d2740);border:2px solid #4a6ba8;border-radius:6px;padding:7px 11px;cursor:pointer;box-shadow:0 2px 0 #121a2b}
+#modalBody button:active{transform:translateY(2px);box-shadow:none}
+#modalBody button.red{background:linear-gradient(#6b2f3f,#401d27);border-color:#c04a6a}
+#modalBody button.green{background:linear-gradient(#2f6b3f,#1d4027);border-color:#4be07a}
+#modalBody input{font-family:inherit;font-size:12px;padding:7px;border-radius:6px;border:2px solid #4a6ba8;background:#0f1420;color:#dfe6f5;width:100%;margin-top:6px}
+#modalBody .grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+#modalBody .grid button{width:100%;padding:10px 4px}
+#modalBody .bar2{height:9px;background:#0f1420;border-radius:5px;overflow:hidden;border:1px solid #2b3550;margin:5px 0}
+#modalBody .bar2 > div{height:100%;background:linear-gradient(90deg,#4a6ba8,#8fd3ff)}
+</style>
 </head>
-
 <body>
+<div id="app">
+  <canvas id="cv"></canvas>
+  <div id="hud">
+    <div class="hudrow">
+      <span id="hMoney">💰 Rp150.000</span>
+      <span id="hTime">Hari 1 • 08:00</span>
+      <span id="hWeather">☀️ Cerah</span>
+    </div>
+    <div class="hudrow">
+      <div class="ebar"><div id="eFill"></div></div>
+      <span id="hNet">📵 Offline</span>
+      <span id="hPower" class="on">⚡ Normal</span>
+      <span id="hRep">⭐ 0</span>
+    </div>
+  </div>
+  <button id="btnMusic" onclick="toggleMusic()">🎵</button>
+  <div id="prompt" class="hidden"></div>
+  <div id="stickArea"><div id="stickBase"><div id="stickKnob"></div></div></div>
+  <div id="rightBtns">
+    <button id="btnE" class="gbtn">E</button>
+    <button id="btnMenu" class="gbtn">☰</button>
+  </div>
+  <div id="toastBox"></div>
+  <div id="modal" class="hidden">
+    <div id="modalBox">
+      <h2 id="modalTitle"></h2>
+      <div id="modalBody"></div>
+      <button id="modalClose" class="gbtn wide">TUTUP</button>
+    </div>
+  </div>
+</div>
+<script>"use strict";
+const WORLD = { w: 1500, h: 780 }, ROOM  = { w: 640,  h: 448 }, SAVE_KEY = "gdl_save_v3", MIN_PER_SEC = 2;
+const CAREERS = ["Beginner Developer","Junior Developer","Indie Developer","Professional Developer","Studio Owner","CEO Technology Company"];
+const QUOTA_PACKS = [{ n:"1 GB", gb:1, p:5000 },{ n:"5 GB", gb:5, p:15000 },{ n:"10 GB", gb:10, p:25000 },{ n:"20 GB", gb:20, p:40000 }];
+const WIFI_PLANS = { basic:{ n:"WiFi Basic", price:100000, install:50000, spd:1.2, cap:30 }, standard:{ n:"WiFi Standard", price:200000, install:100000, spd:2.0, cap:60 }, premium:{ n:"WiFi Premium", price:350000, install:150000, spd:3.0, cap:150 } };
+const SERVER_PLANS = { free:{ n:"Server Gratis", cost:0, cap:2, desc:"Lambat" }, murah:{ n:"Server Murah", cost:5000, cap:6, desc:"Indie" }, menengah:{ n:"Server Menengah", cost:15000, cap:15, desc:"Studio" }, pro:{ n:"Server Profesional", cost:40000, cap:50, desc:"Perusahaan" } };
+const ITEMS = {
+  laptop_bagus:{ n:"Laptop Bagus", p:2500000, cat:"komputer", q:3, pw:65, toko:"komputer", desc:"Kualitas naik" },
+  pc_rakitan:{ n:"PC Rakitan", p:4000000, cat:"komputer", q:4, pw:250, toko:"komputer", desc:"Performa mantap" },
+  pc_pro:{ n:"PC Profesional", p:9000000, cat:"komputer", q:6, pw:400, toko:"komputer", desc:"Super cepat" },
+  monitor:{ n:"Monitor 24\"", p:900000, cat:"periferal", q:1, pw:35, toko:"komputer", desc:"Fokus naik" },
+  keyboard:{ n:"Keyboard Mekanik", p:350000, cat:"periferal", q:1, pw:3, toko:"komputer", desc:"Ngetik nyaman" },
+  mouse:{ n:"Mouse Gaming", p:200000, cat:"periferal", q:1, pw:2, toko:"komputer", desc:"Presisi maksimal" },
+  server_beli:{ n:"Server Pribadi", p:3000000, cat:"server", q:0, pw:300, toko:"komputer", desc:"Hosting 30 produk" },
+  meja:{ n:"Meja Kerja", p:400000, cat:"furnitur", q:0, pw:0, toko:"furnitur", desc:"Rapi" },
+  kursi:{ n:"Kursi Ergonomis", p:600000, cat:"furnitur", q:0, pw:0, toko:"furnitur", desc:"Energi awet" },
+  lampu:{ n:"Lampu Meja", p:150000, cat:"furnitur", q:0, pw:15, toko:"furnitur", desc:"Cahaya" },
+  kipas:{ n:"Kipas Angin", p:250000, cat:"furnitur", q:0, pw:45, toko:"furnitur", desc:"Adem" },
+  ups:{ n:"UPS", p:800000, cat:"listrik", q:0, pw:0, toko:"elektronik", desc:"Backup daya" },
+  genset:{ n:"Genset", p:3500000, cat:"listrik", q:0, pw:0, toko:"elektronik", desc:"Daya tanpa batas" },
+  router:{ n:"Router WiFi", p:500000, cat:"internet", q:0, pw:10, toko:"elektronik", desc:"Perkuat sinyal" }
+};
+const BUILDINGS = [
+  { id:"house", name:"KAMAR", x:120, y:120, w:200, h:140, c:"#8b6cf0", rc:"#5b3fd6", door:{x:220,y:260}, act:"room" },
+  { id:"warnet", name:"WARNET", x:380, y:120, w:180, h:140, c:"#2ec4b6", rc:"#1a9e93", door:{x:470,y:260}, act:"warnet" },
+  { id:"komputer", name:"TOKO KOMPUTER", x:620, y:120, w:220, h:140, c:"#ff9f1c", rc:"#d97e00", door:{x:730,y:260}, act:"shop:komputer" },
+  { id:"kantor", name:"KANTOR", x:900, y:120, w:220, h:140, c:"#5b8def", rc:"#3a63b8", door:{x:1010,y:260}, act:"office" },
+  { id:"elektronik", name:"TOKO ELEKTRONIK", x:1180,y:120, w:200, h:140, c:"#e5556e", rc:"#b23a50", door:{x:1280,y:260}, act:"shop:elektronik" },
+  { id:"furnitur", name:"TOKO FURNITUR", x:120, y:440, w:200, h:140, c:"#c8a15a", rc:"#9a7740", door:{x:220,y:580}, act:"shop:furnitur" },
+  { id:"konter", name:"KONTER PULSA", x:380, y:440, w:180, h:140, c:"#8ac926", rc:"#5f9416", door:{x:470,y:580}, act:"konter" }
+];
+const PARK = { x:620, y:430, w:300, h:180 };
 
-  <!-- NAVBAR -->
-  <header class="navbar">
-    <div class="container nav-inner">
-      <a href="#home" class="brand" aria-label="Bang Ris Game Hub Home">
-        <span class="brand-mark">BR</span>
-        <span>BANG RIS</span>
-      </a>
+let state, menuFn, cam = { x:0, y:0 }, minAcc = 0, autoSaveAcc = 0, lastDt = 0.016;
+let keys = {}, stickId = null, sdx = 0, sdy = 0;
 
-      <button class="menu-toggle" id="menuToggle"
-    
+function defaultState(){
+  return { v:3, money:150000, energy:100, maxEnergy:100, day:1, minutes:8*60, weather:"cerah", scene:"town",
+    townPos:{ x:220, y:340, dir:"down" }, roomPos:{ x:320, y:340, dir:"up" }, quota:0, warnetCredits:0,
+    wifi:{ installed:false, plan:null, active:false, used:0, dueDay:0 }, power:{ bs:0, be:0, upsCharge:100 },
+    items:[], installed:[], products:[], projects:[], reputation:0, career:0, company:null,
+    server:{ plan:"free", own:false }, totalIncome:0, totalExpense:0, log:[] };
+}
+const $ = id => document.getElementById(id);
+const clamp = (v,a,b)=> v<a?a:(v>b?b:v);
+function fmt(n){ return "Rp" + Math.round(n).toLocaleString("id-ID"); }
+function absTime(){ return (state.day-1)*1440 + state.minutes; }
+function hhmm(){ const m=Math.floor(state.minutes); return String(Math.floor(m/60)).padStart(2,"0")+":"+String(m%60).padStart(2,"0"); }
+function curPos(){ return state.scene==="town" ? state.townPos : state.roomPos; }
+function addLog(t){ state.log.push(`[Hari ${state.day} ${hhmm()}] ${t}`); if(state.log.length>60) state.log.shift(); }
+function typeName(t){ return t==="game"?"Game":t==="app"?"Aplikasi":"Website"; }
+function typeMult(t){ return t==="game"?1.25:t==="app"?1.0:0.8; }
+function typeCost(t){ return t==="game"?10000:t==="app"?7500:5000; }
+function typeEmoji(t){ return t==="game"?"🎮":t==="app"?"📱":"🌐"; }let audioCtx, musicInterval, isMusicPlaying = false;
+function toggleMusic() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  if (isMusicPlaying) {
+    clearInterval(musicInterval);
+    isMusicPlaying = false;
+    toast("🎵 Musik Dimatikan");
+    $("btnMusic").textContent = "🎵";
+  } else {
+    isMusicPlaying = true;
+    toast("🎵 Musik Dinyalakan");
+    $("btnMusic").textContent = "🔇";
+    playMelody();
+  }
+}
+const melody = [261.63, 329.63, 392.00, 523.25, 392.00, 329.63, 261.63, 196.00];
+let noteIndex = 0;
+function playMelody() {
+  if (!isMusicPlaying) return;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.type = 'square';
+  osc.frequency.value = melody[noteIndex % melody.length];
+  gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+  osc.start();
+  osc.stop(audioCtx.currentTime + 0.4);
+  noteIndex++;
+  musicInterval = setTimeout(playMelody, 500);
+}
+
+function toast(msg){
+  const box = $("toastBox"); const d = document.createElement("div");
+  d.className = "toast"; d.textContent = msg; box.appendChild(d);
+  setTimeout(()=>{ d.style.opacity="0"; d.style.transition="opacity .4s"; setTimeout(()=>d.remove(),400); }, 2200);
+  while(box.children.length>4) box.removeChild(box.firstChild);
+}
+function isBlackout(){ const t = absTime(); return t >= state.power.bs && t < state.power.be; }
+function hasInstalled(id){ return state.installed.includes(id); }
+function consumePower(){
+  if(!isBlackout()) return true;
+  if(hasInstalled("genset")) return true;
+  if(hasInstalled("ups") && state.power.upsCharge > 0){ state.power.upsCharge -= 18; return true; }
+  return false;
+}
+function hasInternet(){ return (state.wifi.installed && state.wifi.active) || (state.quota > 0.01) || (state.warnetCredits > 0); }
+function useInternet(gb){
+  if(state.wifi.installed && state.wifi.active){ state.wifi.used += gb; return "wifi"; }
+  if(state.quota > 0.01){ if(state.quota >= gb) state.quota -= gb; else state.quota = 0; return "kuota"; }
+  if(state.warnetCredits > 0){ state.warnetCredits--; return "warnet"; }
+  return null;
+}
+function internetSpeed(){
+  if(state.wifi.installed && state.wifi.active){
+    const p = WIFI_PLANS[state.wifi.plan]; let s = p ? p.spd : 1;
+    if(hasInstalled("router")) s += 0.5; return s;
+  }
+  if(state.quota > 0.01) return 0.9;
+  if(state.warnetCredits > 0) return 1.0;
+  return 0;
+}
+function gearScore(){
+  let base = 1, per = 0;
+  for(const id of state.installed){ const it = ITEMS[id]; if(!it) continue; if(it.cat==="komputer") base = Math.max(base, it.q); if(it.cat==="periferal") per += it.q; }
+  return base + Math.min(per, 3);
+}
+function totalPowerDraw(){ let w = 40; for(const id of state.installed){ const it = ITEMS[id]; if(it && it.pw) w += it.pw; } return w; }
+function serverCapacity(){ if(state.server.own) return 30; return (SERVER_PLANS[state.server.plan]||SERVER_PLANS.free).cap; }
+function serverDailyCost(){ if(state.server.own) return 0; return (SERVER_PLANS[state.server.plan]||SERVER_PLANS.free).cost; }
+function careerLevel(){ const r=state.reputation; return r>=700?5:r>=400?4:r>=200?3:r>=90?2:r>=30?1:0; }
+function checkCareer(){ const lv=careerLevel(); if(lv>state.career){ state.career=lv; toast("🎉 Naik level: "+CAREERS[lv]); addLog("Karier naik: "+CAREERS[lv]); updateHUD(); } }
+
+function advanceTime(mins){
+  state.minutes += mins;
+  while(state.minutes >= 1440){ state.minutes -= 1440; state.day++; onNewDay(); }
+  if(!isBlackout() && state.power.upsCharge < 100) state.power.upsCharge = Math.min(100, state.power.upsCharge + mins*0.5);
+  updateHUD();
+}
+function onNewDay(){
+  state.weather = Math.random() < 0.32 ? "hujan" : "cerah";
+  state.power.bs = 0; state.power.be = 0;
+  if(Math.random() < 0.30){ const base = (state.day-1)*1440, start = base + 6*60 + Math.floor(Math.random()*720); state.power.bs = start; state.power.be = start + 60 + Math.floor(Math.random()*120); }
+  const net = hasInternet(), cap = serverCapacity(); let published = 0, income = 0;
+  for(const p of state.products){
+    if(!p.published || published >= cap) continue;
+    published++;
+    if(net){ p.popularity = Math.min(100, p.popularity + 8); const inc = Math.round(p.quality * 1200 * (p.popularity/100) * typeMult(p.type)); p.income += inc; income += inc; }
+  }
+  if(income > 0){ state.money += income; state.totalIncome += income; addLog("Pendapatan: +"+fmt(income)); state.reputation += Math.floor(income/10000); }
+  let exp = 0, srv = serverDailyCost();
+  if(srv>0){ exp += srv; addLog("Server: -"+fmt(srv)); }
+  if(state.company){
+    if(state.company.office){ exp += 60000; addLog("Kantor: -"+fmt(60000)); }
+    let sal = 0; for(const e of state.company.employees) sal += e.salary;
+    if(sal>0){ exp += sal; addLog("Gaji: -"+fmt(sal)); }
+  }
+  const listrik = 3000 + Math.round(totalPowerDraw()*8); exp += listrik; addLog("Listrik: -"+fmt(listrik));
+  if(exp>0){ state.money = Math.max(0, state.money - exp); state.totalExpense += exp; }
+  if(state.wifi.installed){
+    if(state.day >= state.wifi.dueDay && state.wifi.active){ state.wifi.active = false; addLog("WiFi nonaktif"); toast("⚠️ WiFi nonaktif!"); }
+    else if(state.wifi.active && state.day >= state.wifi.dueDay - 3){ toast("📶 Tagihan WiFi mendekat!"); }
+  }
+  checkCareer(); updateHUD(); saveGame(true);
+}
+function buyQuota(i){ const q=QUOTA_PACKS[i]; if(state.money<q.p){toast("💸 Uang kurang");return;} state.money-=q.p; state.totalExpense+=q.p; state.quota+=q.gb; addLog("Beli kuota"); toast("✅ Kuota +"+q.n); rerender(); updateHUD(); }
+function installWifi(k){ const p=WIFI_PLANS[k], tot=p.install+p.price; if(state.money<tot){toast("💸 Butuh "+fmt(tot));return;} state.money-=tot; state.totalExpense+=tot; state.wifi={installed:true,plan:k,active:true,used:0,dueDay:state.day+30}; addLog("Pasang WiFi"); toast("✅ WiFi terpasang!"); rerender(); updateHUD(); }
+function changeWifi(k){ const p=WIFI_PLANS[k]; if(state.wifi.plan===k){toast("Sudah pakai ini");return;} if(state.money<p.price){toast("💸 Uang kurang");return;} state.money-=p.price; state.totalExpense+=p.price; state.wifi={installed:true,plan:k,active:true,used:0,dueDay:state.day+30}; toast("✅ Paket diganti"); rerender(); updateHUD(); }
+function payWifi(){ if(!state.wifi.installed){toast("Tidak ada WiFi");return;} const p=WIFI_PLANS[state.wifi.plan]; if(state.money<p.price){toast("💸 Uang kurang");return;} state.money-=p.price; state.totalExpense+=p.price; state.wifi.active=true; state.wifi.used=0; state.wifi.dueDay=state.day+30; toast("✅ Tagihan dibayar"); rerender(); updateHUD(); }
+function stopWifi(){ state.wifi={installed:false,plan:null,active:false,used:0,dueDay:0}; toast("WiFi berhenti"); rerender(); updateHUD(); }
+function buyWarnet(){ if(state.money<5000){toast("💸 Uang kurang");return;} state.money-=5000; state.totalExpense+=5000; state.warnetCredits+=3; toast("✅ +3 aksi warnet"); rerender(); updateHUD(); }
+function buyItem(id){ const it=ITEMS[id]; if(state.items.includes(id)||state.installed.includes(id)){toast("Sudah punya");return;} if(state.money<it.p){toast("💸 Uang kurang");return;} state.money-=it.p; state.totalExpense+=it.p; state.items.push(id); toast("✅ "+it.n+" dibeli"); rerender(); updateHUD(); }
+function installItem(id){ const i=state.items.indexOf(id); if(i<0)return; state.items.splice(i,1); state.installed.push(id); toast("🔧 Terpasang"); rerender(); updateHUD(); }
+function uninstallItem(id){ const i=state.installed.indexOf(id); if(i<0)return; state.installed.splice(i,1); state.items.push(id); toast("📦 Dilepas"); rerender(); updateHUD(); }
+function sellItem(id){ const i=state.items.indexOf(id); if(i<0)return; const val=Math.floor(ITEMS[id].p*0.5); state.items.splice(i,1); state.money+=val; state.totalIncome+=val; toast("💵 Terjual "+fmt(val)); rerender(); updateHUD(); }function startProject(type){
+  const cost=typeCost(type); if(state.money<cost){toast("💸 Uang kurang");return;} if(!consumePower()){toast("⚡ Listrik mati!");return;}
+  state.money-=cost; state.totalExpense+=cost;
+  const names={game:["Petualangan Pixel","Space Runner","Ninja Kucing","Raja Nusantara"],app:["Catatan Harian","Kasir UMKM","Dompet Digital"],web:["Toko Online","Portfolio Studio","Blog Teknologi"]};
+  const nm=names[type][Math.floor(Math.random()*names[type].length)]+" "+(Math.floor(Math.random()*90)+10);
+  state.projects.push({name:nm,type:type,progress:0}); toast("📁 Proyek dimulai"); menuProjects(); updateHUD();
+}
+function workProject(i){
+  const p=state.projects[i]; if(!p)return; if(!consumePower()){toast("⚡ Listrik mati!");return;} if(state.energy<12){toast("😴 Energi kurang");return;}
+  state.energy-=12; advanceTime(60);
+  let gain=10+gearScore()*2.5+Math.random()*4; if(state.company) gain+=state.company.employees.filter(e=>e.role==="programmer").length*3;
+  p.progress=Math.min(100,p.progress+gain); if(p.progress>=100) finishProject(i); else toast("⚙️ "+Math.round(p.progress)+"%");
+  updateHUD(); if(menuFn) rerender();
+}
+function finishProject(i){
+  const p=state.projects[i]; let q=20+gearScore()*9+Math.random()*15; if(state.company) q+=state.company.employees.filter(e=>e.role==="designer").length*4;
+  q=Math.max(10,Math.min(100,Math.round(q)));
+  state.products.push({id:Date.now()+Math.random(),name:p.name,type:p.type,quality:q,popularity:5,published:false,income:0,day:state.day});
+  state.projects.splice(i,1); state.reputation+=5; toast("✅ Selesai! Q"+q); checkCareer(); updateHUD();
+}
+function publishProduct(i){
+  const p=state.products[i]; if(!p||p.published)return; if(!hasInternet()){toast("📵 Tidak ada internet!");return;}
+  const used=state.products.filter(x=>x.published).length; if(used>=serverCapacity()){toast("🖥️ Server penuh!");return;}
+  useInternet(0.5); advanceTime(Math.max(10,Math.round(60/internetSpeed()))); p.published=true; state.reputation+=3; toast("🚀 Terbit!"); checkCareer(); updateHUD(); rerender();
+}
+function sellProduct(i){ const p=state.products[i]; if(!p)return; const val=Math.round(p.quality*3000); state.money+=val; state.totalIncome+=val; state.products.splice(i,1); toast("💵 Terjual "+fmt(val)); updateHUD(); rerender(); }
+function rentServer(plan){ state.server.plan=plan; state.server.own=false; toast("🖥️ Server aktif"); rerender(); updateHUD(); }
+function buyOwnServer(){ if(!state.items.includes("server_beli")&&!state.installed.includes("server_beli")){toast("🛒 Beli Server Pribadi dulu");return;} state.server.own=true; toast("🖥️ Server Pribadi aktif!"); rerender(); updateHUD(); }
+function createCompany(){ const nm=($("companyName")&&$("companyName").value.trim())||"Tech Studio"; if(state.company){toast("Sudah punya");return;} if(state.money<1500000){toast("💸 Butuh 1.5 Juta");return;} if(state.reputation<90){toast("⭐ Butuh Reputasi 90");return;} state.money-=1500000; state.totalExpense+=1500000; state.company={name:nm,employees:[],office:false}; toast("🏢 Perusahaan didirikan!"); checkCareer(); updateHUD(); rerender(); }
+function hireEmployee(r){ if(!state.company)return; if(state.company.employees.length>=8){toast("Maksimal 8");return;} const s=r==="programmer"?45000:35000; state.company.employees.push({role:r,salary:s}); toast("👥 Direkrut"); updateHUD(); rerender(); }
+function fireEmployee(i){ if(state.company) state.company.employees.splice(i,1); rerender(); }
+function rentOffice(){ if(!state.company){toast("Belum ada PT");return;} if(state.money<60000){toast("💸 Uang kurang");return;} state.money-=60000; state.company.office=true; toast("🏢 Kantor disewa"); updateHUD(); rerender(); }
+function stopOffice(){ if(state.company) state.company.office=false; rerender(); }
+function sleep(){ 
+  if(state.scene!=="room"){toast("Tidur di kamar");return;} 
+  if(state.energy >= state.maxEnergy){toast("😴 Energi sudah penuh! Tidak perlu tidur.");return;}
+  const t=7*60, m=state.minutes<t?t-state.minutes:(1440-state.minutes)+t; 
+  advanceTime(m); 
+  state.energy=state.maxEnergy; 
+  toast("😴 Energi penuh!"); 
+  closeModal(); updateHUD(); 
+}
+function restPark(){ if(state.energy>=state.maxEnergy){toast("Energi penuh");return;} advanceTime(30); state.energy=Math.min(state.maxEnergy,state.energy+15); toast("🌳 Energi +15"); updateHUD(); }
+
+function updateHUD(){
+  if(!state)return;
+  $("hMoney").textContent="💰 "+fmt(state.money); $("hTime").textContent="Hari "+state.day+" • "+hhmm();
+  $("hWeather").textContent=state.weather==="hujan"?"🌧️ Hujan":"☀️ Cerah";
+  const ef=$("eFill"), pct=clamp(state.energy,0,100); ef.style.width=pct+"%"; ef.className=pct<30?"low":"";
+  const net=$("hNet");
+  if(hasInternet()){ net.textContent=state.wifi.installed?"🌐 WiFi":(state.quota>0.01?"📶 "+state.quota.toFixed(1)+"GB":"🌐 Warnet"); net.style.color="#7ee081"; }
+  else { net.textContent="📵 Offline"; net.style.color="#ff7b7b"; }
+  const pw=$("hPower");
+  if(isBlackout()){
+    if(hasInstalled("genset")){pw.textContent="⚡ Genset";pw.className="on";}
+    else if(hasInstalled("ups")&&state.power.upsCharge>0){pw.textContent="🔋 UPS";pw.className="on";}
+    else {pw.textContent="⚡ MATI";pw.className="off";}
+  } else { pw.textContent="⚡ Normal"; pw.className="on"; }
+  $("hRep").textContent="⭐ "+state.reputation;
+}
+function showMenu(fn,title){ menuFn=fn; $("modalTitle").textContent=title; $("modalBody").innerHTML=fn(); $("modal").classList.remove("hidden"); }
+function rerender(){ if(menuFn) $("modalBody").innerHTML=menuFn(); }
+function closeModal(){ $("modal").classList.add("hidden"); menuFn=null; }
+function modalOpen(){ return !$("modal").classList.contains("hidden"); }
+
+function menuOnlineShop(){ showMenu(()=>{
+  let h = `<div class="card"><b>📱 Toko Online (E-Commerce)</b>
+    <div class="dim">Beli pulsa/kuota & barang tanpa keluar rumah. Uang: ${fmt(state.money)}</div></div>`;
+  h += `<h3>PULSA & KUOTA</h3>`;
+  h += QUOTA_PACKS.map((q,i)=>`<div class="card"><b>${q.n}</b><div class="row"><span class="price">${fmt(q.p)}</span><button onclick="buyQuota(${i})">Beli</button></div></div>`).join("");
+  h += `<h3>PERANGKAT & FURNITUR</h3>`;
+  for(const [k,v] of Object.entries(ITEMS)){
+    const owned = state.items.includes(k) || state.installed.includes(k);
+    h += `<div class="card"><b>${v.n}</b> <span class="tag">${v.toko}</span><div class="dim">${v.desc}</div>
+    <div class="row"><span class="price">${fmt(v.p)}</span>${owned?`<span class="tag">Dimiliki</span>`:`<button onclick="buyItem('${k}')">Beli</button>`}</div></div>`;
+  }
+  h += `<button onclick="menuMain()">← Kembali ke Menu</button>`;
+  return h;
+}, "📱 TOKO ONLINE"); }
+
+function menuMain(){ showMenu(()=>`
+  <div class="card"><b>${CAREERS[state.career]}</b><div class="dim">Reputasi ${state.reputation} • ${state.company?state.company.name:"Belum ada PT"}</div></div>
+  <div class="grid">
+    <button onclick="menuOnlineShop()">📱 Toko Online</button><button onclick="menuInventory()">🎒 Inventaris</button>
+    <button onclick="menuFinance()">💰 Keuangan</button><button onclick="menuInternet()">🌐 Internet</button>
+    <button onclick="menuServer()">🖥️ Server</button><button onclick="menuCompany()">🏢 Perusahaan</button>
+    <button onclick="menuHelp()">❓ Bantuan</button><button onclick="saveGame()">💾 Simpan</button>
+    <button onclick="loadGame()">📂 Muat</button>
+  </div>`, "☰ MENU UTAMA"); }
+function menuLaptop(){ showMenu(()=>`
+  <div class="card"><b>💻 Komputer</b><div class="dim">Skor: ${gearScore()} • Daya: ${totalPowerDraw()}W</div>
+  <div class="dim">${isBlackout()?"⚡ LISTRIK MATI":"⚡ Listrik OK"}</div><div class="dim">Energi: ${Math.round(state.energy)}/100</div></div>
+  <div class="grid">
+    <button onclick="menuNewProject()">📁 Buat Proyek</button><button onclick="menuProjects()">⚙️ Proyek (${state.projects.length})</button>
+    <button onclick="menuProducts()">📦 Produk (${state.products.length})</button><button onclick="menuOnlineShop()">📱 Toko Online</button>
+    <button onclick="menuInternet()">🌐 Internet</button><button onclick="menuServer()">🖥️ Server</button>
+    <button onclick="sleep()">😴 Tidur</button>
+  </div>`, "💻 LAPTOP"); }
+function menuNewProject(){ showMenu(()=>`
+  <p class="dim">Pilih jenis proyek:</p>
+  <div class="grid">
+    <button onclick="startProject('game')">🎮 Game<br><small>${fmt(typeCost("game"))}</small></button>
+    <button onclick="startProject('app')">📱 Aplikasi<br><small>${fmt(typeCost("app"))}</small></button>
+    <button onclick="startProject('web')">🌐 Website<br><small>${fmt(typeCost("web"))}</small></button>
+  </div><button style="margin-top:10px" onclick="menuLaptop()">← Kembali</button>`, "📁 BUAT PROYEK"); }
+function menuProjects(){ showMenu(()=>{
+  if(state.projects.length===0) return `<p class="dim">Tidak ada proyek.</p><button onclick="menuNewProject()">+ Baru</button>`;
+  return state.projects.map((p,i)=>`
+    <div class="card"><b>${typeEmoji(p.type)} ${p.name}</b><div class="dim">Progres ${Math.round(p.progress)}%</div>
+    <div class="bar2"><div style="width:${p.progress}%"></div></div>
+    <div class="row"><button class="green" onclick="workProject(${i})">⚙️ Kerjakan (-12E)</button></div></div>`).join("")+
+  `<button style="margin-top:6px" onclick="menuNewProject()">+ Baru</button><button style="margin-top:6px" onclick="menuLaptop()">← Kembali</button>`;
+}, "⚙️ PROYEK"); }
+function menuProducts(){ showMenu(()=>{
+  if(state.products.length===0) return `<p class="dim">Belum ada produk.</p><button onclick="menuLaptop()">← Kembali</button>`;
+  const cap=serverCapacity(), used=state.products.filter(x=>x.published).length;
+  let h=`<div class="dim">Server: ${used}/${cap} slot</div>`;
+  h+=state.products.map((p,i)=>`
+    <div class="card"><b>${typeEmoji(p.type)} ${p.name}</b><div class="dim">Q${p.quality} • Populer ${p.popularity}%</div>
+    <div class="dim">${p.published?"✅ Terbit ("+fmt(p.income)+")":"⏳ Belum terbit"}</div>
+    <div class="row">${p.published?"":`<button class="green" onclick="publishProduct(${i})">🚀 Terbit</button>`}
+    <button class="red" onclick="sellProduct(${i})">💵 Jual (${fmt(p.quality*3000)})</button></div></div>`).join("");
+  return h+`<button onclick="menuLaptop()">← Kembali</button>`;
+}, "📦 PRODUK"); }
+function menuInternet(){ showMenu(()=>`
+  <div class="card"><b>Kuota: ${state.quota.toFixed(2)} GB</b><div class="dim">Warnet: ${state.warnetCredits} aksi</div></div>
+  <div class="card"><b>WiFi Rumah</b>
+    ${state.wifi.installed?`<div class="dim">Paket: ${WIFI_PLANS[state.wifi.plan].n}</div>
+    <div class="dim">Status: ${state.wifi.active?"AKTIF":"NONAKTIF"}</div>
+    <div class="row"><button class="green" onclick="payWifi()">💳 Bayar</button><button class="red" onclick="stopWifi()">Berhenti</button></div>`
+    :`<div class="dim">Belum terpasang (ke Konter).</div>`}
+  </div><button onclick="menuLaptop()">← Kembali</button>`, "🌐 INTERNET"); }
+function menuKonter(){ showMenu(()=>`
+  <div class="dim">Uang: ${fmt(state.money)}</div><h3>PAKET KUOTA</h3>
+  ${QUOTA_PACKS.map((q,i)=>`<div class="card"><b>${q.n}</b><div class="row"><span class="price">${fmt(q.p)}</span><button onclick="buyQuota(${i})">Beli</button></div></div>`).join("")}
+  <h3>PEMASANGAN WiFi</h3>
+  ${Object.entries(WIFI_PLANS).map(([k,v])=>`<div class="card"><b>${v.n}</b><div class="dim">${fmt(v.install+v.price)}</div>
+  <div class="row">${state.wifi.installed?`<button onclick="changeWifi('${k}')">Ganti</button>`:`<button onclick="installWifi('${k}')">Pasang</button>`}</div></div>`).join("")}`, "📶 KONTER"); }
+function menuWarnet(){ showMenu(()=>`
+  <div class="card"><b>Warnet</b><div class="dim">Sewa Rp5.000 = 3 aksi online</div>
+  <div class="row"><button class="green" onclick="buyWarnet()">Sewa</button></div></div>`, "🖥️ WARNET"); }
+function menuShop(t){ showMenu(()=>{
+  let h=`<div class="dim">Uang: ${fmt(state.money)}</div>`;
+  for(const [k,v] of Object.entries(ITEMS)){ if(v.toko!==t) continue;
+    const owned=state.items.includes(k)||state.installed.includes(k);
+    h+=`<div class="card"><b>${v.n}</b>${v.q?`<span class="tag">+${v.q}</span>`:""}<div class="dim">${v.desc}</div>
+    <div class="row"><span class="price">${fmt(v.p)}</span>${owned?`<span class="tag">Dimiliki</span>`:`<button onclick="buyItem('${k}')">Beli</button>`}</div></div>`; }
+  return h+`<button onclick="menuInventory()">🎒 Inventaris</button>`;
+}, t==="komputer"?"🖥️ TOKO KOMPUTER":t==="furnitur"?"🛋️ TOKO FURNITUR":"🔌 TOKO ELEKTRONIK"); }
+function menuInventory(){ showMenu(()=>{
+  let h=`<div class="dim">Skor: ${gearScore()} • Daya: ${totalPowerDraw()}W</div><h3>TERPASANG</h3>`;
+  h+=state.installed.map(id=>`<div class="card"><b>${ITEMS[id]?ITEMS[id].n:id}</b><div class="row"><button class="red" onclick="uninstallItem('${id}')">Lepas</button></div></div>`).join("")||`<p class="dim">Kosong</p>`;
+  h+=`<h3>INVENTARIS</h3>`;
+  h+=state.items.map(id=>`<div class="card"><b>${ITEMS[id]?ITEMS[id].n:id}</b><div class="row"><button class="green" onclick="installItem('${id}')">Pasang</button><button class="red" onclick="sellItem('${id}')">Jual</button></div></div>`).join("")||`<p class="dim">Kosong</p>`;
+  return h; }, "🎒 INVENTARIS"); }
+function menuFinance(){ showMenu(()=>`
+  <div class="card"><b>Saldo</b><div class="big">${fmt(state.money)}</div></div>
+  <div class="card"><b>Riwayat</b>${state.log.slice(-15).reverse().map(l=>`<div class="dim">${l}</div>`).join("")}</div>`, "💰 KEUANGAN"); }
+function menuServer(){ showMenu(()=>`
+  <div class="card"><b>Aktif</b><div class="dim">${state.server.own?"Server Pribadi":SERVER_PLANS[state.server.plan].n} (Kapasitas ${serverCapacity()})</div></div>
+  <h3>SEWA</h3>${Object.entries(SERVER_PLANS).map(([k,v])=>`<div class="card"><b>${v.n}</b><div class="dim">${v.desc} • ${fmt(v.cost)}/hari</div>
+  <div class="row"><button onclick="rentServer('${k}')">Pakai</button></div></div>`).join("")}
+  <button onclick="buyOwnServer()">Aktifkan Server Pribadi</button>`, "🖥️ SERVER"); }
+function menuCompany(){ showMenu(()=>{
+  if(!state.company) return `<div class="card"><b>Dirikan PT (Rp1.5Jt)</b><div class="dim">Butuh Reputasi 90 (Sekarang: ${state.reputation})</div>
+    <input id="companyName" placeholder="Nama PT..." maxlength="22"><div class="row"><button class="green" onclick="createCompany()">Dirikan</button></div></div>`;
+  const c=state.company; let h=`<div class="card"><b>${c.name}</b><div class="dim">Karyawan: ${c.employees.length}/8 • Kantor: ${c.office?"Ya":"Tidak"}</div></div>`;
+  h+=c.employees.map((e,i)=>`<div class="card"><b>${e.role==="programmer"?"Programmer":"Desainer"}</b><div class="dim">Gaji ${fmt(e.salary)}/hari</div><div class="row"><button class="red" onclick="fireEmployee(${i})">Pecat</button></div></div>`).join("");
+  h+=`<div class="row"><button onclick="hireEmployee('programmer')">+ Programmer</button><button onclick="hireEmployee('designer')">+ Desainer</button></div>`;
+  h+=c.office?`<button class="red" onclick="stopOffice()">Berhenti Sewa Kantor</button>`:`<button class="green" onclick="rentOffice()">Sewa Kantor (60rb/hari)</button>`;
+  return h; }, "🏢 PERUSAHAAN"); }
+function menuHelp(){ showMenu(()=>`
+  <div class="card"><b>Kontrol</b><div class="dim">PC: WASD + E • HP: Joystick + Tombol E</div></div>
+  <div class="card"><b>Alur</b><div class="dim">1. Masuk Kamar (gedung ungu).<br>2. Dekati laptop, tekan E.<br>3. Buat proyek & kerjakan.<br>4. Publikasikan (butuh internet).<br>5. Beli kuota/WiFi di Konter atau Toko Online.</div></div>`, "❓ BANTUAN"); }
+
+function saveGame(silent){ try{ localStorage.setItem(SAVE_KEY,JSON.stringify(state)); if(!silent)toast("💾 Disimpan"); }catch(e){ if(!silent)toast("Gagal simpan"); } }
+function loadGame(){ try{ const r=localStorage.getItem(SAVE_KEY); if(!r){toast("Tidak ada save");return;} state=Object.assign(defaultState(),JSON.parse(r)); closeModal(); updateHUD(); toast("📂 Dimuat"); }catch(e){toast("Save rusak");} }
+
+function nearestBuilding(){ const p=state.townPos; let best=null,bd=1e9; for(const b of BUILDINGS){ const d=Math.hypot(p.x-b.door.x,p.y-b.door.y); if(d<58&&d<bd){bd=d;best=b;} } return best; }
+function nearPark(){ const p=state.townPos; return p.x>PARK.x-20&&p.x<PARK.x+PARK.w+20&&p.y>PARK.y-20&&p.y<PARK.y+PARK.h+20; }
+const ROOM_OBJS = [{id:"bed",x:120,y:340,label:"Tidur"},{id:"desk",x:475,y:195,label:"Komputer"},{id:"door",x:320,y:410,label:"Keluar"}];
+function nearestRoomObj(){ const p=state.roomPos; let best=null,bd=1e9; for(const o of ROOM_OBJS){ const d=Math.hypot(p.x-o.x,p.y-o.y); if(d<62&&d<bd){bd=d;best=o;} } return best; }
+
+function interact(){
+  if(modalOpen()) return;
+  if(state.scene==="town"){
+    const b=nearestBuilding();
+    if(b){ if(b.act==="room"){state.scene="room";state.roomPos={x:320,y:350,dir:"up"};toast("🏠 Kamar");} else if(b.act==="warnet")menuWarnet(); else if(b.act==="konter")menuKonter(); else if(b.act==="office")menuCompany(); else if(b.act.startsWith("shop:"))menuShop(b.act.split(":")[1]); return; }
+    if(nearPark()){ restPark(); return; } toast("Tidak ada interaksi");
+  } else {
+    const o=nearestRoomObj(); if(!o){toast("Dekati objek");return;}
+    if(o.id==="bed")sleep(); else if(o.id==="desk")menuLaptop(); else if(o.id==="door"){state.scene="town";state.townPos={x:220,y:310,dir:"down"};}
+  }
+  }window.addEventListener("keydown",e=>{ const k=e.key.toLowerCase(); keys[k]=true; if(k==="e"&&!modalOpen()){e.preventDefault();interact();} if(k==="escape"&&modalOpen())closeModal(); });
+window.addEventListener("keyup",e=>{ keys[e.key.toLowerCase()]=false; });
+const stickBase=$("stickBase"), stickKnob=$("stickKnob");
+function moveStick(e){ const r=stickBase.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2; let dx=e.clientX-cx,dy=e.clientY-cy; const d=Math.hypot(dx,dy),max=r.width/2-8; if(d>max){dx=dx/d*max;dy=dy/d*max;} stickKnob.style.transform=`translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`; sdx=dx/max; sdy=dy/max; }
+stickBase.addEventListener("pointerdown",e=>{e.preventDefault();stickId=e.pointerId;try{stickBase.setPointerCapture(e.pointerId);}catch(_){}moveStick(e);});
+stickBase.addEventListener("pointermove",e=>{if(e.pointerId===stickId)moveStick(e);});
+function endStick(e){if(e.pointerId!==stickId)return;stickId=null;sdx=0;sdy=0;stickKnob.style.transform="translate(-50%,-50%)";}
+stickBase.addEventListener("pointerup",endStick); stickBase.addEventListener("pointercancel",endStick);
+$("btnE").addEventListener("click",()=>{if(!modalOpen())interact();});
+$("btnMenu").addEventListener("click",()=>{if(modalOpen())closeModal();else menuMain();});
+$("modalClose").addEventListener("click",closeModal);
+
+function canMove(x,y,scene){
+  if(scene==="town"){ if(x<24||x>WORLD.w-24||y<90||y>WORLD.h-24)return false; for(const b of BUILDINGS){ if(x>b.x-10&&x<b.x+b.w+10&&y>b.y-10&&y<b.y+b.h+8)return false; } return true; }
+  else { if(x<52||x>ROOM.w-52||y<118||y>ROOM.h-32)return false; if(x>60&&x<190&&y>268&&y<360)return false; if(x>392&&x<560&&y>78&&y<175)return false; return true; }
+}
+
+function update(dt){
+  lastDt=dt; if(modalOpen())return;
+  const pos=curPos(), scene=state.scene; let ix=0,iy=0;
+  if(keys["w"]||keys["arrowup"])iy--; if(keys["s"]||keys["arrowdown"])iy++; if(keys["a"]||keys["arrowleft"])ix--; if(keys["d"]||keys["arrowright"])ix++;
+  if(Math.abs(sdx)>0.18)ix+=sdx; if(Math.abs(sdy)>0.18)iy+=sdy;
+  const mag=Math.hypot(ix,iy); if(mag>1){ix/=mag;iy/=mag;}
+  const speed=115;
+  if(ix!==0||iy!==0){
+    const nx=pos.x+ix*speed*dt, ny=pos.y+iy*speed*dt;
+    if(canMove(nx,pos.y,scene))pos.x=nx; if(canMove(pos.x,ny,scene))pos.y=ny;
+    if(Math.abs(ix)>Math.abs(iy))pos.dir=ix>0?"right":"left"; else pos.dir=iy>0?"down":"up";
+    pos.anim=(pos.anim||0)+dt*11;
+    let drain=0.35; if(state.installed.includes("kursi"))drain*=0.9; state.energy=Math.max(0,state.energy-drain*dt);
+  } else { pos.anim=0; }
+  minAcc+=dt*MIN_PER_SEC; if(minAcc>=1){const m=Math.floor(minAcc);minAcc-=m;advanceTime(m);}
+  autoSaveAcc+=dt; if(autoSaveAcc>45){autoSaveAcc=0;saveGame(true);}
+  updatePrompt(); updateHUD();
+}
+function updatePrompt(){
+  const el=$("prompt"); if(modalOpen()){el.classList.add("hidden");return;} let txt="";
+  if(state.scene==="town"){
+    const b=nearestBuilding(); if(b){ txt="E — "+b.name; } else if(nearPark()){ txt="E — Istirahat"; }
+  } else { const o=nearestRoomObj(); if(o)txt="E — "+o.label; }
+  if(txt){el.textContent=txt;el.classList.remove("hidden");}else el.classList.add("hidden");
+}
+
+const cv=$("cv"), ctx=cv.getContext("2d"); let W=0,H=0,ZOOM=2;
+function resize(){ W=cv.width=Math.floor(window.innerWidth); H=cv.height=Math.floor(window.innerHeight); ZOOM=clamp(Math.min(W,H)/380,1,2.4); }
+window.addEventListener("resize",resize); resize();
+const drops=[]; for(let i=0;i<110;i++)drops.push({x:Math.random()*1600,y:Math.random()*1600,s:340+Math.random()*280});
+
+function drawChar(x,y,dir,anim,colors){
+  const bob=Math.sin(anim)*1.5; ctx.fillStyle="rgba(0,0,0,.25)"; ctx.beginPath(); ctx.ellipse(x,y,11,4,0,0,Math.PI*2); ctx.fill();
+  const lo=Math.sin(anim)*3; ctx.fillStyle=colors.pants; ctx.fillRect(x-7,y-14+Math.max(0,lo),6,14); ctx.fillRect(x+1,y-14+Math.max(0,-lo),6,14);
+  ctx.fillStyle=colors.shirt; ctx.fillRect(x-8,y-31+bob,16,18); ctx.fillStyle=colors.skin; ctx.fillRect(x-6,y-47+bob,12,14);
+  ctx.fillStyle=colors.hair; ctx.fillRect(x-7,y-49+bob,14,7); ctx.fillStyle="#1b1b25";
+  if(dir==="down"){ctx.fillRect(x-4,y-42+bob,2,3);ctx.fillRect(x+2,y-42+bob,2,3);} else if(dir==="left"){ctx.fillRect(x-5,y-42+bob,2,3);} else if(dir==="right"){ctx.fillRect(x+3,y-42+bob,2,3);} else {ctx.fillRect(x-4,y-42+bob,8,2);}
+}
+const PLAYER_COLORS={shirt:"#4a7bd6",pants:"#26344d",skin:"#f0c090",hair:"#2a2028"};
+const NPC_COLORS=[{shirt:"#e07a4a",pants:"#3b2b2b",skin:"#e8b98a",hair:"#1d1d24"},{shirt:"#6ad06a",pants:"#22303a",skin:"#d8a878",hair:"#33261c"},{shirt:"#c96ad0",pants:"#2a2233",skin:"#f2cba0",hair:"#241a20"}];
+const npcs=[{x:520,y:430,hx:520,hy:430,t:0,c:0},{x:980,y:430,hx:980,hy:430,t:1.7,c:1},{x:300,y:640,hx:300,hy:640,t:3.1,c:2}];
+function updateNPCs(dt){ for(const n of npcs){ n.t+=dt*0.7; n.x=n.hx+Math.sin(n.t)*55; n.y=n.hy+Math.cos(n.t*0.8)*22; } }
+
+function drawTown(){
+  for(let x=0;x<WORLD.w;x+=128)for(let y=0;y<WORLD.h;y+=128){ctx.fillStyle=((x/128+y/128)%2===0)?"#4a9c4a":"#439043";ctx.fillRect(x,y,128,128);}
+  ctx.fillStyle="#8a8f9c"; ctx.fillRect(0,288,WORLD.w,12); ctx.fillRect(0,400,WORLD.w,12);
+  ctx.fillStyle="#5a5f6b"; ctx.fillRect(0,300,WORLD.w,100); ctx.fillStyle="#e8e8a0"; for(let x=20;x<WORLD.w;x+=90)ctx.fillRect(x,346,46,8);
+  ctx.fillStyle="#3f8a3f"; ctx.fillRect(PARK.x,PARK.y,PARK.w,PARK.h); ctx.fillStyle="#5aa85a"; ctx.fillRect(PARK.x+8,PARK.y+8,PARK.w-16,PARK.h-16);
+  const trees=[[PARK.x+50,PARK.y+55],[PARK.x+150,PARK.y+45],[PARK.x+230,PARK.y+90],[PARK.x+90,PARK.y+130]];
+  for(const [tx,ty] of trees){ ctx.fillStyle="#5a3a1a"; ctx.fillRect(tx-5,ty,10,26); ctx.fillStyle="#2f7a34"; ctx.beginPath();ctx.arc(tx,ty-6,22,0,Math.PI*2);ctx.fill(); ctx.fillStyle="#3f9c46"; ctx.beginPath();ctx.arc(tx-7,ty-14,14,0,Math.PI*2);ctx.fill(); }
+  ctx.fillStyle="#8a5a2a"; ctx.fillRect(PARK.x+185,PARK.y+140,56,10); ctx.fillRect(PARK.x+185,PARK.y+152,56,6);
+  for(const b of BUILDINGS){
+    ctx.fillStyle="rgba(0,0,0,.20)"; ctx.fillRect(b.x+8,b.y+b.h-2,b.w,12);
+    ctx.fillStyle=b.c; ctx.fillRect(b.x,b.y,b.w,b.h); ctx.strokeStyle="rgba(0,0,0,.28)"; ctx.lineWidth=3; ctx.strokeRect(b.x,b.y,b.w,b.h);
+    ctx.fillStyle=b.rc; ctx.fillRect(b.x-9,b.y-26,b.w+18,32); ctx.fillStyle="rgba(255,255,255,.16)"; ctx.fillRect(b.x-9,b.y-26,b.w+18,6);
+    const wy=b.y+26, cols=Math.max(2,Math.floor(b.w/70)), gap=b.w/(cols+1);
+    for(let i=0;i<cols;i++){ const wx=b.x+gap*(i+1)-15; ctx.fillStyle="#bfe6ff"; ctx.fillRect(wx,wy,30,26); ctx.fillStyle="rgba(0,0,0,.35)"; ctx.fillRect(wx+13,wy,4,26); ctx.fillRect(wx,wy+11,30,4); }
+    const dx=b.door.x; ctx.fillStyle="#3a2b1a"; ctx.fillRect(dx-19,b.y+b.h-52,38,52); ctx.fillStyle="#5c452a"; ctx.fillRect(dx-15,b.y+b.h-48,30,44); ctx.fillStyle="#ffd166"; ctx.fillRect(dx+8,b.y+b.h-28,4,4);
+    ctx.font="bold 11px monospace"; ctx.textAlign="center"; ctx.textBaseline="middle"; const tw=ctx.measureText(b.name).width;
+    ctx.fillStyle="rgba(0,0,0,.62)"; ctx.fillRect(dx-tw/2-7,b.y+b.h-76,tw+14,18); ctx.fillStyle="#fff2c8"; ctx.fillText(b.name,dx,b.y+b.h-67); ctx.textAlign="left"; ctx.textBaseline="alphabetic";
+  }
+  for(const n of npcs)drawChar(n.x,n.y,"down",n.t*6,NPC_COLORS[n.c]);
+  const p=state.townPos; drawChar(p.x,p.y,p.dir,p.anim||0,PLAYER_COLORS);
+}
+function drawRoom(){
+  for(let y=0;y<ROOM.h;y+=32)for(let x=0;x<ROOM.w;x+=32){ctx.fillStyle=((x/32+y/32)%2===0)?"#8a6a45":"#7d5f3d";ctx.fillRect(x,y,32,32);}
+  ctx.fillStyle="#3a3050"; ctx.fillRect(0,0,ROOM.w,88); ctx.fillStyle="#4a3f66"; ctx.fillRect(0,80,ROOM.w,10);
+  ctx.fillStyle="#2a2438"; ctx.fillRect(0,0,36,ROOM.h); ctx.fillRect(ROOM.w-36,0,36,ROOM.h); ctx.fillRect(0,ROOM.h-24,ROOM.w,24);
+  ctx.fillStyle="#20304a"; ctx.fillRect(70,16,70,48); ctx.fillStyle="#4a7bd6"; ctx.fillRect(76,22,58,36); ctx.fillStyle="#ffd166"; ctx.fillRect(88,32,34,6); ctx.fillRect(88,44,22,4);
+  ctx.fillStyle="#bfe6ff"; ctx.fillRect(480,18,96,52); ctx.fillStyle="rgba(0,0,0,.35)"; ctx.fillRect(524,18,6,52); ctx.fillRect(480,40,96,6);
+  ctx.fillStyle="#6b4a2a"; ctx.fillRect(58,268,130,88); ctx.fillStyle="#d9dce8"; ctx.fillRect(62,272,122,78); ctx.fillStyle="#7fa4e0"; ctx.fillRect(62,272,122,26); ctx.fillStyle="#ffffff"; ctx.fillRect(74,276,40,18);
+  ctx.fillStyle="#5c452a"; ctx.fillRect(392,96,168,74); ctx.fillStyle="#7a5c38"; ctx.fillRect(392,96,168,12);
+  ctx.fillStyle="#20242e"; ctx.fillRect(440,62,62,42); ctx.fillStyle="#3f8fd0"; ctx.fillRect(444,66,54,32); ctx.fillStyle="#9fd8ff"; ctx.fillRect(450,74,42,3); ctx.fillRect(450,82,30,3); ctx.fillStyle="#2b3040"; ctx.fillRect(434,100,74,10);
+  ctx.fillStyle="#333a4a"; ctx.fillRect(470,190,44,12); ctx.fillRect(504,158,10,44);
+  ctx.fillStyle="#3a2b1a"; ctx.fillRect(288,404,64,32); ctx.fillStyle="#5c452a"; ctx.fillRect(292,408,56,28);
+  ctx.fillStyle="rgba(120,90,200,.28)"; ctx.fillRect(240,240,150,90);
+  const p=state.roomPos; drawChar(p.x,p.y,p.dir,p.anim||0,PLAYER_COLORS);
+}
+function drawLighting(){
+  ctx.setTransform(1,0,0,1,0,0); const m=state.minutes; let a=0;
+  if(m<300)a=0.62; else if(m<390)a=0.62*(1-(m-300)/90); else if(m<1020)a=0; else if(m<1170)a=0.62*((m-1020)/150); else a=0.62;
+  if(a>0.01){ctx.fillStyle="rgba(10,16,48,"+a.toFixed(3)+")";ctx.fillRect(0,0,W,H);}
+  if(state.weather==="hujan"){ctx.fillStyle="rgba(20,30,60,0.18)";ctx.fillRect(0,0,W,H);}
+}
+function drawRain(dt){
+  if(state.weather!=="hujan")return; ctx.setTransform(1,0,0,1,0,0); ctx.strokeStyle="rgba(180,210,255,.45)"; ctx.lineWidth=1.5; ctx.beginPath();
+  for(const d of drops){ d.y+=d.s*dt; d.x-=40*dt; if(d.y>H){d.y=-20;d.x=Math.random()*W;} if(d.x<-20)d.x=W+20; ctx.moveTo(d.x,d.y); ctx.lineTo(d.x-4,d.y+12); } ctx.stroke();
+}
+function render(){
+  ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,W,H); ctx.imageSmoothingEnabled=false;
+  const scene=state.scene, wW=scene==="town"?WORLD.w:ROOM.w, wH=scene==="town"?WORLD.h:ROOM.h, pos=curPos(), viewW=W/ZOOM, viewH=H/ZOOM;
+  cam.x=wW<=viewW?(wW-viewW)/2:clamp(pos.x-viewW/2,0,wW-viewW); cam.y=wH<=viewH?(wH-viewH)/2:clamp(pos.y-viewH/2,0,wH-viewH);
+  ctx.setTransform(ZOOM,0,0,ZOOM,-cam.x*ZOOM,-cam.y*ZOOM);
+  if(scene==="town")drawTown(); else drawRoom();
+  drawLighting(); drawRain(lastDt);
+}
+let lastT=performance.now();
+function loop(now){
+  let dt=(now-lastT)/1000; lastT=now; if(dt>0.1)dt=0.1;
+  update(dt); if(state.scene==="town")updateNPCs(dt); render(); requestAnimationFrame(loop);
+}
+function boot(){
+  state=defaultState(); const raw=localStorage.getItem(SAVE_KEY);
+  if(raw){ try{ state=Object.assign(defaultState(),JSON.parse(raw)); setTimeout(()=>toast("📂 Save dimuat"),600); }catch(e){} }
+  else setTimeout(()=>toast("Masuk Kamar (gedung ungu), dekat laptop, tekan E"),700);
+  updateHUD(); requestAnimationFrame(loop); window.addEventListener("beforeunload",()=>saveGame(true));
+}
+boot();
+</script>
+</body>
+</html>
